@@ -758,6 +758,7 @@ a:focus {
 }
 
 .portfolio .portfolio-item figure .link-preview,
+.portfolio .portfolio-item figure .link-github,
 .portfolio .portfolio-item figure .link-details,
 .portfolio .portfolio-item figure .portfolio-title {
     position: absolute;
@@ -797,6 +798,30 @@ a:focus {
     right: 50%;
     top: calc(25% - 18px);
 }
+.portfolio .portfolio-item figure .link-github {
+    position: absolute;
+    z-index: 5;
+    right: 50%;
+    top: calc(25% - 18px);
+    transform: translateX(50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.portfolio .portfolio-item figure .link-github svg {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 80%;
+    height: 80%;
+}
+.portfolio .portfolio-item figure .link-github:hover  {
+    background: #000;
+}
+.portfolio .portfolio-item figure:hover .link-github svg:hover {
+    fill:#FF6F61
+}
 
 .portfolio .portfolio-item figure .portfolio-title {
     margin: 0;
@@ -827,13 +852,18 @@ a:focus {
 
 .portfolio .portfolio-item figure:hover .link-preview {
     opacity: 1;
-    left: calc(50% - 61px);
+    left: calc(50% - 81px);
 }
 
 .portfolio .portfolio-item figure:hover .link-details {
     opacity: 1;
-    right: calc(50% - 61px);
+    right: calc(50% - 81px);
 }
+.portfolio .portfolio-item figure:hover .link-github {
+    opacity: 1;
+   
+}
+
 
 .portfolio .portfolio-item figure:hover .portfolio-title {
     opacity: 1;

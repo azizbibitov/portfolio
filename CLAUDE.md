@@ -32,7 +32,7 @@ All content lives in a single file: `index.html`. The page is structured as full
 - `css/style.css` - all custom styles
 - `js/main.js` - initializes all JS plugins (Typed, Isotope, Slick, Waypoints, smooth scroll, back-to-top)
 - `lib/` - vendored JS libraries: easing, isotope, lightbox, slick, typed, waypoints
-- `img/` - portfolio images follow the naming pattern `portfolio-N.jpg` (thumbnail) and `portfolio-N-2.jpg` (lightbox full-size)
+- `img/` - portfolio images follow the naming pattern `portfolio-N.{jpg,png}` (thumbnail) and `portfolio-N-2.{jpg,png}` (lightbox full-size); both extensions are in use
 - `documents/` - PDFs linked from the page (resume, per-project descriptions)
 
 **CDN dependencies** (loaded in `<head>`): Bootstrap 4.4.1, Font Awesome 5.10, Google Fonts (Open Sans).
@@ -43,3 +43,5 @@ All content lives in a single file: `index.html`. The page is structured as full
 - **Adding a portfolio item**: copy an existing `.portfolio-item` block, update `data-filter`, image `src` attributes, and the lightbox `href`
 - **Skill bars**: set `aria-valuenow` on `.progress-bar` to the desired percentage (0-100)
 - **Resume PDF**: replace `documents/aziz-bibitow-resume.pdf` and keep the filename the same, or update the `href` in the large-btn section
+- **Portfolio filters**: the filter `<ul id="portfolio-flters">` is currently commented out in `index.html`; uncomment and update `data-filter` values to re-enable category filtering
+- **Contact form**: the `<form>` in `#contact` has no `action` and no submit handler - it is decorative only and does not send messages

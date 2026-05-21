@@ -1,5 +1,5 @@
 /**********************************/
-/********** General CSS *********** #F6D155  1e4566 /
+/********** General CSS *********** #FFB800  1e4566 /
 /**********************************/
 body {
     color: #666666;
@@ -15,7 +15,7 @@ a {
 a:hover,
 a:active,
 a:focus {
-    color: #FF6F61;
+    color: #FFB800;
     outline: none;
     text-decoration: none;
 }
@@ -76,7 +76,7 @@ a:focus {
 }
 
 .navbar-expand-md .navbar-nav .nav-link i {
-    color: #FF6F61;
+    color: #ffffff;
     float: right;
     padding-top: 5px;
     transition: all .3s;
@@ -84,12 +84,12 @@ a:focus {
 
 .navbar-expand-md .navbar-nav .nav-link:hover,
 .navbar-expand-md .navbar-nav .nav-link.active {
-    color: #FF6F61;
+    color: #FFB800;
 }
 
 .navbar-expand-md .navbar-nav .nav-link:hover i,
-.navbar-expand-md .navbar-nav .nav-link.active i{
-    color: #ffffff;
+.navbar-expand-md .navbar-nav .nav-link.active i {
+    color: #FFB800;
 }
 
 
@@ -206,9 +206,9 @@ a:focus {
         padding: 5px 0;
         margin: 0 15px 15px 0;
         text-align: center;
-        font-size: 18px;
+        font-size: 22px;
         color: #222222;
-        background: #FF6F61;
+        background: #FFB800;
     }
     
     .sidebar .sidebar-footer a:last-child {
@@ -216,9 +216,50 @@ a:focus {
     }
     
     .sidebar .sidebar-footer a:hover {
-        color: #FF6F61;
+        color: #FFB800;
         background: #ffffff;
     }
+
+    .sidebar .sidebar-footer a.btn-github {
+        background: #ffffff;
+        color: #181717;
+    }
+
+    .sidebar .sidebar-footer a.btn-github:hover {
+        background: #222222;
+        color: #ffffff;
+    }
+
+    .sidebar .sidebar-footer a.btn-linkedin {
+        background: #0077B5;
+        color: #222222;
+    }
+
+    .sidebar .sidebar-footer a.btn-linkedin:hover {
+        background: #ffffff;
+        color: #0077B5;
+    }
+
+    .sidebar .sidebar-footer a.btn-telegram {
+        background: #2CA5E0;
+        color: #222222;
+    }
+
+    .sidebar .sidebar-footer a.btn-telegram:hover {
+        background: #ffffff;
+        color: #2CA5E0;
+    }
+
+    .sidebar .sidebar-footer a.btn-upwork {
+        background: #6FDA44;
+        color: #222222;
+    }
+
+    .sidebar .sidebar-footer a.btn-upwork:hover {
+        background: #ffffff;
+        color: #6FDA44;
+    }
+
     
     .sidebar:hover .sidebar-footer {
         display: block;
@@ -285,7 +326,7 @@ a:focus {
 }
 
 .back-to-top i:hover {
-    color: #FF6F61;
+    color: #FFB800;
 }
 
 .back-to-top {
@@ -319,7 +360,7 @@ a:focus {
 }
 
 .header p {
-    color: #FF6F61;
+    color: #FFB800;
     font-size: 22px;
     font-weight: 600;
     margin-bottom: 10px;
@@ -357,7 +398,7 @@ a:focus {
     position: relative;
     width: 50%;
     padding: 15px 0;
-    color: #FF6F61;
+    color: #FFB800;
     font-size: 20px;
     background: #222222;
     border-radius: 0;
@@ -365,7 +406,7 @@ a:focus {
 
 .large-btn .btn:last-child {
     color: #222222;
-    background: #FF6F61;
+    background: #6FDA44;
 }
 
 .large-btn .btn i {
@@ -414,7 +455,7 @@ a:focus {
     height: 3px;
     bottom: 0;
     left: 0;
-    background: #FF6F61;
+    background: #FFB800;
 }
 
 
@@ -443,13 +484,23 @@ a:focus {
 .about .btn {
     border-radius: 0;
     color: #222222;
-    background: #FF6F61;
+    background: #FFB800;
     transition: all .3s;
 }
 
 .about .btn:hover {
-    color: #FF6F61;
+    color: #FFB800;
     background: #222222;
+}
+
+.about .btn-upwork {
+    background: #6FDA44;
+    color: #222222;
+}
+
+.about .btn-upwork:hover {
+    background: #222222;
+    color: #6FDA44;
 }
 
 .about .skills {
@@ -473,14 +524,14 @@ a:focus {
 
 .about .progress {
     height: 5px;
-    border: 1px solid #FF6F61;
+    border: 1px solid #FFB800;
     border-radius: 0;
     background: #ffffff;
 }
 
 .about .progress .progress-bar {
     width: 1px;
-    background: #FF6F61;
+    background: #FFB800;
     border-radius: 0;
     transition: 1s;
 }
@@ -500,8 +551,21 @@ a:focus {
     position: relative;
     width: 100%;
     padding: 20px 0 20px 20px;
-    border-left: 1px solid #FF6F61;
-    border-bottom: 1px solid #FF6F61;
+    border-bottom: 1px solid #FFB800;
+}
+
+.education .edu-col::after {
+    content: "";
+    position: absolute;
+    left: -1px;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: #FFB800;
+}
+
+.education .col-md-6:first-child .edu-col::after {
+    top: 11px;
 }
 
 .education .col-md-6:first-child .edu-col {
@@ -516,6 +580,10 @@ a:focus {
 @media (min-width: 768px) {
     .education .col-md-6:nth-child(-n+2) .edu-col {
         padding-top: 0;
+    }
+
+    .education .col-md-6:nth-child(2) .edu-col::after {
+        top: 11px;
     }
 
     .education .col-md-6:last-child .edu-col,
@@ -538,14 +606,14 @@ a:focus {
     content: "";
     width: 11px;
     height: 11px;
-    background: #FF6F61;
+    background: #FFB800;
     top: 5px;
     left: -26px;
     border-radius: 5px;
 }
 
 .education .edu-col span i {
-    color: #FF6F61;
+    color: #FFB800;
 }
 
 .education .edu-col h3 {
@@ -572,9 +640,40 @@ a:focus {
 .experience .exp-col {
     position: relative;
     width: 100%;
+    height: 100%;
     padding: 20px 0 20px 20px;
-    border-left: 1px solid #FF6F61;
-    border-bottom: 1px solid #FF6F61;
+}
+
+/* Horizontal lines at the bottom of each row */
+.experience .col-md-6:nth-child(odd) .exp-col::before,
+.experience .col-md-6:nth-child(even) .exp-col::before {
+    content: "";
+    position: absolute;
+    height: 1px;
+    background: #FFB800;
+    bottom: 0;
+    left: -1px;
+    right: 0;
+}
+
+/* Left column line extends across gutter to reach right column's vertical line */
+.experience .col-md-6:nth-child(odd) .exp-col::before {
+    right: -30px;
+}
+
+.experience .exp-col::after {
+    content: "";
+    position: absolute;
+    left: -1px;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: #FFB800;
+}
+
+/* Line starts at dot center for first items */
+.experience .col-md-6:first-child .exp-col::after {
+    top: 11px;
 }
 
 .experience .col-md-6:first-child .exp-col {
@@ -582,7 +681,6 @@ a:focus {
 }
 
 .experience .col-md-6:last-child .exp-col {
-    border-bottom: none;
     padding-bottom: 0;
 }
 
@@ -591,9 +689,17 @@ a:focus {
         padding-top: 0;
     }
 
+    .experience .col-md-6:nth-child(2) .exp-col::after {
+        top: 11px;
+    }
+
+    .experience .col-md-6:nth-last-child(2) .exp-col::before,
+    .experience .col-md-6:last-child .exp-col::before {
+        display: none;
+    }
+
     .experience .col-md-6:last-child .exp-col,
     .experience .col-md-6:nth-last-child(2) .exp-col {
-        border-bottom: none;
         padding-bottom: 0;
     }
 }
@@ -611,14 +717,14 @@ a:focus {
     content: "";
     width: 11px;
     height: 11px;
-    background: #FF6F61;
+    background: #FFB800;
     top: 5px;
     left: -26px;
     border-radius: 5px;
 }
 
 .experience .exp-col span i {
-    color: #FF6F61;
+    color: #FFB800;
 }
 
 .experience .exp-col h3 {
@@ -664,7 +770,7 @@ a:focus {
 
 .service .srv-col i {
     font-size: 30px;
-    color: #FF6F61;
+    color: #FFB800;
     margin-bottom: 15px;
 }
 
@@ -720,14 +826,14 @@ a:focus {
     font-size: 13px;
     line-height: 15px;
     text-transform: uppercase;
-    border: 1px solid #FF6F61;
+    border: 1px solid #FFB800;
     background: #ffffff;
     transition: all 0.3s ease-in-out;
 }
 
 .portfolio #portfolio-flters li:hover,
 .portfolio #portfolio-flters li.filter-active {
-    background: #FF6F61;
+    background: #FFB800;
     color: #222222;
 }
 
@@ -768,7 +874,7 @@ a:focus {
     text-align: center;
     width: 45px;
     height: 35px;
-    background: #FF6F61;
+    background: #FFB800;
     transition: 0.2s linear;
 }
 
@@ -786,7 +892,7 @@ a:focus {
 
 .portfolio .portfolio-item figure .link-preview:hover i,
 .portfolio .portfolio-item figure .link-details:hover i {
-    color: #FF6F61;
+    color: #FFB800;
 }
 
 .portfolio .portfolio-item figure .link-preview {
@@ -820,7 +926,7 @@ a:focus {
     background: #000;
 }
 .portfolio .portfolio-item figure:hover .link-github svg:hover {
-    fill:#FF6F61
+    fill:#FFB800
 }
 
 .portfolio .portfolio-item figure .portfolio-title {
@@ -920,7 +1026,7 @@ a:focus {
 }
 
 .review .review-text .ratting i {
-    color: #FF6F61;
+    color: #FFB800;
     font-size: 14px;
 }
 
@@ -971,7 +1077,7 @@ a:focus {
 .review-slider .slick-prev:focus::before,
 .review-slider .slick-next:hover::before,
 .review-slider .slick-next:focus::before {
-    color: #FF6F61;
+    color: #FFB800;
 }
 
 .review-slider .slick-prev::before,
@@ -1000,7 +1106,7 @@ a:focus {
 }
 
 .review-slider .slick-dots li.slick-active button:before {
-    color: #FF6F61;
+    color: #FFB800;
 }
 
 .review-slider.slick-slider {
@@ -1032,7 +1138,7 @@ a:focus {
 
 .contact .contact-info p i {
     width: 25px;
-    color: #FF6F61;
+    color: #FFB800;
 }
 
 .contact .contact-info p a {
@@ -1040,7 +1146,7 @@ a:focus {
 }
 
 .contact .contact-info p a:hover {
-    color: #FF6F61;
+    color: #FFB800;
     text-decoration: none;
 }
 
@@ -1049,11 +1155,12 @@ a:focus {
 }
 
 .contact .social a {
-    width: 35px;
-    height: 35px;
+    width: 40px;
+    height: 40px;
     padding: 5px 0;
+    font-size: 22px;
     color: #222222;
-    background: #FF6F61;
+    background: #FFB800;
     border-radius: 0;
     margin-top: 15px;
     margin-right: 15px;
@@ -1065,9 +1172,21 @@ a:focus {
 }
 
 .contact .social a:hover {
-    color: #FF6F61;
+    color: #FFB800;
     background: #222222;
 }
+
+.contact .social a.btn-linkedin { background: #0077B5; color: #222222; }
+.contact .social a.btn-linkedin:hover { background: #ffffff; color: #0077B5; }
+
+.contact .social a.btn-telegram { background: #2CA5E0; color: #222222; }
+.contact .social a.btn-telegram:hover { background: #ffffff; color: #2CA5E0; }
+
+.contact .social a.btn-upwork { background: #6FDA44; color: #222222; }
+.contact .social a.btn-upwork:hover { background: #ffffff; color: #6FDA44; }
+
+.contact .social a.btn-github { background: #181717; color: #ffffff; }
+.contact .social a.btn-github:hover { background: #ffffff; color: #181717; }
 
 .contact .form {
     position: relative;
@@ -1081,18 +1200,18 @@ a:focus {
 
 .contact .form .form-control:focus {
     box-shadow: none;
-    border-color: #FF6F61;
+    border-color: #FFB800;
 }
 
 .contact .form .btn {
     color: #222222;
-    background: #FF6F61;
+    background: #FFB800;
     border-radius: 0;
     transition: all .3s;
 }
 
 .contact .form .btn:hover {
-    color: #FF6F61;
+    color: #FFB800;
     background: #222222;
 }
 
@@ -1104,7 +1223,7 @@ a:focus {
     position: relative;
     width: 100%;
     padding: 30px 30px 0 30px;
-    background: #F6D155;
+    background: #FFB800;
 }
 
 .footer .col-md-6:last-child {
@@ -1124,7 +1243,7 @@ a:focus {
 }
 
 .footer a {
-    color: #FF6F61;
+    color: #FFB800;
     font-weight: 600;
 }
 

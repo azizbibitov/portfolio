@@ -55,6 +55,19 @@
     });
     
     
+    // Hide sidebar footer when contact section is visible
+    var contactObserver = new IntersectionObserver(function (entries) {
+        if (entries[0].isIntersecting) {
+            $('.sidebar-footer').fadeOut('fast');
+        } else {
+            $('.sidebar-footer').fadeIn('slow');
+        }
+    }, { threshold: 0.1 });
+    var contactButtons = document.querySelector('#contact .social');
+    if (contactButtons) {
+        contactObserver.observe(contactButtons);
+    }
+
     // Back to top button
     $(window).scroll(function () {
         if ($(this).scrollTop() > 100) {

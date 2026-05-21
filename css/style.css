@@ -232,7 +232,7 @@ a:focus {
 
     .sidebar .sidebar-footer a.btn-linkedin {
         background: #0077B5;
-        color: #222222;
+        color: #ffffff;
     }
 
     .sidebar .sidebar-footer a.btn-linkedin:hover {
@@ -242,7 +242,7 @@ a:focus {
 
     .sidebar .sidebar-footer a.btn-telegram {
         background: #2CA5E0;
-        color: #222222;
+        color: #ffffff;
     }
 
     .sidebar .sidebar-footer a.btn-telegram:hover {
@@ -251,13 +251,18 @@ a:focus {
     }
 
     .sidebar .sidebar-footer a.btn-upwork {
-        background: #6FDA44;
-        color: #222222;
+        background: #14a800;
+        color: #ffffff;
+    }
+
+    .sidebar .sidebar-footer a.btn-upwork svg {
+        position: relative;
+        top: -3px;
     }
 
     .sidebar .sidebar-footer a.btn-upwork:hover {
         background: #ffffff;
-        color: #6FDA44;
+        color: #14a800;
     }
 
     
@@ -406,7 +411,7 @@ a:focus {
 
 .large-btn .btn:last-child {
     color: #222222;
-    background: #6FDA44;
+    background: #14a800;
 }
 
 .large-btn .btn i {
@@ -494,13 +499,13 @@ a:focus {
 }
 
 .about .btn-upwork {
-    background: #6FDA44;
+    background: #14a800;
     color: #222222;
 }
 
 .about .btn-upwork:hover {
     background: #222222;
-    color: #6FDA44;
+    color: #14a800;
 }
 
 .about .skills {
@@ -1045,7 +1050,7 @@ a:focus {
     z-index: 1;
     opacity: 0;
     transition: .5s;
-    background: rgba(255, 111, 97, .7);
+    background: rgba(255, 184, 0, .7);
 }
 
 .review-slider .slick-prev {
@@ -1176,17 +1181,19 @@ a:focus {
     background: #222222;
 }
 
-.contact .social a.btn-linkedin { background: #0077B5; color: #222222; }
+.contact .social a.btn-linkedin { background: #0077B5; color: #ffffff; }
 .contact .social a.btn-linkedin:hover { background: #ffffff; color: #0077B5; }
 
-.contact .social a.btn-telegram { background: #2CA5E0; color: #222222; }
+.contact .social a.btn-telegram { background: #2CA5E0; color: #ffffff; }
 .contact .social a.btn-telegram:hover { background: #ffffff; color: #2CA5E0; }
 
-.contact .social a.btn-upwork { background: #6FDA44; color: #222222; }
-.contact .social a.btn-upwork:hover { background: #ffffff; color: #6FDA44; }
+.contact .social a.btn-upwork { background: #14a800; color: #ffffff; }
+.contact .social a.btn-upwork:hover { background: #ffffff; color: #14a800; }
+.contact .social a.btn-upwork svg { position: relative; top: -3px; }
 
 .contact .social a.btn-github { background: #181717; color: #ffffff; }
 .contact .social a.btn-github:hover { background: #ffffff; color: #181717; }
+.contact .social a.btn-github i { position: relative; top: -1.5px; }
 
 .contact .form {
     position: relative;

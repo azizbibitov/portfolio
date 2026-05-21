@@ -270,6 +270,16 @@ a:focus {
         color: #14a800;
     }
 
+    .sidebar .sidebar-footer a.btn-whatsapp {
+        background: #25D366;
+        color: #ffffff;
+    }
+
+    .sidebar .sidebar-footer a.btn-whatsapp:hover {
+        background: #ffffff;
+        color: #25D366;
+    }
+
     
     .sidebar:hover .sidebar-footer {
         display: block;
@@ -954,7 +964,7 @@ a:focus {
     color: #222222;
     font-size: 16px;
     font-weight: 600;
-    background: rgba(255, 111, 97, .5);
+    background: rgba(0, 119, 181, .5);
     border-radius: 0;
 }
 
@@ -1203,6 +1213,10 @@ a:focus {
 .contact .social a.btn-github { background: #181717; color: #ffffff; }
 .contact .social a.btn-github:hover { background: #ffffff; color: #181717; }
 .contact .social a.btn-github i { position: relative; top: -1.5px; }
+
+.contact .social a.btn-whatsapp { background: #25D366; color: #ffffff; }
+.contact .social a.btn-whatsapp:hover { background: #ffffff; color: #25D366; }
+.contact .social a.btn-whatsapp i { position: relative; top: -1.5px; }
 
 .contact .form {
     position: relative;

@@ -409,8 +409,12 @@ a:focus {
     border-radius: 0;
 }
 
+.large-btn .btn:first-child {
+    color: #ffffff;
+}
+
 .large-btn .btn:last-child {
-    color: #222222;
+    color: #ffffff;
     background: #14a800;
 }
 
@@ -500,7 +504,7 @@ a:focus {
 
 .about .btn-upwork {
     background: #14a800;
-    color: #222222;
+    color: #ffffff;
 }
 
 .about .btn-upwork:hover {
@@ -1211,7 +1215,7 @@ a:focus {
 }
 
 .contact .form .btn {
-    color: #222222;
+    color: #ffffff;
     background: #FFB800;
     border-radius: 0;
     transition: all .3s;

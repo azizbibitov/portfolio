@@ -1,5 +1,13 @@
 /**********************************/
-/********** General CSS *********** #0077B5  1e4566 /
+/*********** Accent Color **********/
+/**********************************/
+:root {
+    --accent: #F05138;
+    --accent-rgb: 240, 81, 56;
+}
+
+/**********************************/
+/********** General CSS ***********/
 /**********************************/
 body {
     color: #666666;
@@ -15,7 +23,7 @@ a {
 a:hover,
 a:active,
 a:focus {
-    color: #0077B5;
+    color: var(--accent);
     outline: none;
     text-decoration: none;
 }
@@ -89,12 +97,12 @@ a:focus {
 
 .navbar-expand-md .navbar-nav .nav-link:hover,
 .navbar-expand-md .navbar-nav .nav-link.active {
-    color: #0077B5;
+    color: var(--accent);
 }
 
 .navbar-expand-md .navbar-nav .nav-link:hover i,
 .navbar-expand-md .navbar-nav .nav-link.active i {
-    color: #0077B5;
+    color: var(--accent);
 }
 
 
@@ -213,7 +221,7 @@ a:focus {
         text-align: center;
         font-size: 22px;
         color: #222222;
-        background: #0077B5;
+        background: var(--accent);
     }
     
     .sidebar .sidebar-footer a:last-child {
@@ -221,7 +229,7 @@ a:focus {
     }
     
     .sidebar .sidebar-footer a:hover {
-        color: #0077B5;
+        color: var(--accent);
         background: #ffffff;
     }
 
@@ -346,7 +354,7 @@ a:focus {
 }
 
 .back-to-top i:hover {
-    color: #0077B5;
+    color: var(--accent);
 }
 
 .back-to-top {
@@ -380,7 +388,7 @@ a:focus {
 }
 
 .header p {
-    color: #0077B5;
+    color: var(--accent);
     font-size: 22px;
     font-weight: 600;
     margin-bottom: 10px;
@@ -392,11 +400,59 @@ a:focus {
     font-weight: 700;
 }
 
+.header h1 .h1-shine-wrap {
+    position: relative;
+    display: inline-block;
+    overflow: hidden;
+}
+
+.header h1 .name-text {
+    color: #222222;
+}
+
+.header h1 .apple-icon {
+    color: #888888;
+    vertical-align: baseline;
+}
+
+.header h1 .swift-icon {
+    color: var(--accent);
+    vertical-align: baseline;
+    position: relative;
+    top: 4px;
+}
+
+.header h1 .h1-shine-wrap::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -60%;
+    width: 40%;
+    height: 100%;
+    background: linear-gradient(
+        105deg,
+        transparent 20%,
+        rgba(255, 255, 255, 0.0) 35%,
+        rgba(255, 255, 255, 0.62) 50%,
+        rgba(255, 255, 255, 0.0) 65%,
+        transparent 80%
+    );
+    animation: h1-sweep 3.5s ease-in-out infinite;
+    pointer-events: none;
+    mix-blend-mode: screen;
+}
+
+@keyframes h1-sweep {
+    0%   { left: -60%; }
+    100% { left: 120%; }
+}
+
 .header h2 {
     display: inline-block;
     margin: 0;
     height: 25px;
     font-size: 25px;
+    color: #888888;
 }
 
 .header .typed-text {
@@ -418,7 +474,7 @@ a:focus {
     position: relative;
     width: 50%;
     padding: 15px 0;
-    color: #0077B5;
+    color: var(--accent);
     font-size: 20px;
     background: #222222;
     border-radius: 0;
@@ -479,7 +535,7 @@ a:focus {
     height: 3px;
     bottom: 0;
     left: 0;
-    background: #0077B5;
+    background: var(--accent);
 }
 
 
@@ -508,12 +564,12 @@ a:focus {
 .about .btn {
     border-radius: 0;
     color: #222222;
-    background: #0077B5;
+    background: var(--accent);
     transition: all .3s;
 }
 
 .about .btn:hover {
-    color: #0077B5;
+    color: var(--accent);
     background: #222222;
 }
 
@@ -548,14 +604,14 @@ a:focus {
 
 .about .progress {
     height: 5px;
-    border: 1px solid #0077B5;
+    border: 1px solid var(--accent);
     border-radius: 0;
     background: #ffffff;
 }
 
 .about .progress .progress-bar {
     width: 1px;
-    background: #0077B5;
+    background: var(--accent);
     border-radius: 0;
     transition: 1s;
 }
@@ -575,7 +631,7 @@ a:focus {
     position: relative;
     width: 100%;
     padding: 20px 0 20px 20px;
-    border-bottom: 1px solid #0077B5;
+    border-bottom: 1px solid var(--accent);
 }
 
 .education .edu-col::after {
@@ -585,7 +641,7 @@ a:focus {
     top: 0;
     bottom: 0;
     width: 1px;
-    background: #0077B5;
+    background: var(--accent);
 }
 
 .education .col-md-6:first-child .edu-col::after {
@@ -630,14 +686,14 @@ a:focus {
     content: "";
     width: 11px;
     height: 11px;
-    background: #0077B5;
+    background: var(--accent);
     top: 5px;
     left: -26px;
     border-radius: 5px;
 }
 
 .education .edu-col span i {
-    color: #0077B5;
+    color: var(--accent);
 }
 
 .education .edu-col h3 {
@@ -674,7 +730,7 @@ a:focus {
     content: "";
     position: absolute;
     height: 1px;
-    background: #0077B5;
+    background: var(--accent);
     bottom: 0;
     left: -1px;
     right: 0;
@@ -692,7 +748,7 @@ a:focus {
     top: 0;
     bottom: 0;
     width: 1px;
-    background: #0077B5;
+    background: var(--accent);
 }
 
 /* Line starts at dot center for first items */
@@ -741,14 +797,14 @@ a:focus {
     content: "";
     width: 11px;
     height: 11px;
-    background: #0077B5;
+    background: var(--accent);
     top: 5px;
     left: -26px;
     border-radius: 5px;
 }
 
 .experience .exp-col span i {
-    color: #0077B5;
+    color: var(--accent);
 }
 
 .experience .exp-col h3 {
@@ -794,7 +850,7 @@ a:focus {
 
 .service .srv-col i {
     font-size: 30px;
-    color: #0077B5;
+    color: var(--accent);
     margin-bottom: 15px;
 }
 
@@ -850,14 +906,14 @@ a:focus {
     font-size: 13px;
     line-height: 15px;
     text-transform: uppercase;
-    border: 1px solid #0077B5;
+    border: 1px solid var(--accent);
     background: #ffffff;
     transition: all 0.3s ease-in-out;
 }
 
 .portfolio #portfolio-flters li:hover,
 .portfolio #portfolio-flters li.filter-active {
-    background: #0077B5;
+    background: var(--accent);
     color: #222222;
 }
 
@@ -898,7 +954,7 @@ a:focus {
     text-align: center;
     width: 45px;
     height: 35px;
-    background: #0077B5;
+    background: var(--accent);
     transition: 0.2s linear;
 }
 
@@ -916,7 +972,7 @@ a:focus {
 
 .portfolio .portfolio-item figure .link-preview:hover i,
 .portfolio .portfolio-item figure .link-details:hover i {
-    color: #0077B5;
+    color: var(--accent);
 }
 
 .portfolio .portfolio-item figure .link-preview {
@@ -950,7 +1006,7 @@ a:focus {
     background: #000;
 }
 .portfolio .portfolio-item figure:hover .link-github svg:hover {
-    fill:#0077B5
+    fill:var(--accent)
 }
 
 .portfolio .portfolio-item figure .portfolio-title {
@@ -964,7 +1020,7 @@ a:focus {
     color: #222222;
     font-size: 16px;
     font-weight: 600;
-    background: rgba(0, 119, 181, .5);
+    background: rgba(var(--accent-rgb), .5);
     border-radius: 0;
 }
 
@@ -1050,7 +1106,7 @@ a:focus {
 }
 
 .review .review-text .ratting i {
-    color: #0077B5;
+    color: var(--accent);
     font-size: 14px;
 }
 
@@ -1069,7 +1125,7 @@ a:focus {
     z-index: 1;
     opacity: 0;
     transition: .5s;
-    background: rgba(0, 119, 181, .7);
+    background: rgba(var(--accent-rgb), .7);
 }
 
 .review-slider .slick-prev {
@@ -1101,7 +1157,7 @@ a:focus {
 .review-slider .slick-prev:focus::before,
 .review-slider .slick-next:hover::before,
 .review-slider .slick-next:focus::before {
-    color: #0077B5;
+    color: var(--accent);
 }
 
 .review-slider .slick-prev::before,
@@ -1130,7 +1186,7 @@ a:focus {
 }
 
 .review-slider .slick-dots li.slick-active button:before {
-    color: #0077B5;
+    color: var(--accent);
 }
 
 .review-slider.slick-slider {
@@ -1162,7 +1218,7 @@ a:focus {
 
 .contact .contact-info p i {
     width: 25px;
-    color: #0077B5;
+    color: var(--accent);
 }
 
 .contact .contact-info p a {
@@ -1170,7 +1226,7 @@ a:focus {
 }
 
 .contact .contact-info p a:hover {
-    color: #0077B5;
+    color: var(--accent);
     text-decoration: none;
 }
 
@@ -1184,7 +1240,7 @@ a:focus {
     padding: 5px 0;
     font-size: 22px;
     color: #222222;
-    background: #0077B5;
+    background: var(--accent);
     border-radius: 0;
     margin-top: 15px;
     margin-right: 15px;
@@ -1196,7 +1252,7 @@ a:focus {
 }
 
 .contact .social a:hover {
-    color: #0077B5;
+    color: var(--accent);
     background: #222222;
 }
 
@@ -1230,18 +1286,18 @@ a:focus {
 
 .contact .form .form-control:focus {
     box-shadow: none;
-    border-color: #0077B5;
+    border-color: var(--accent);
 }
 
 .contact .form .btn {
     color: #ffffff;
-    background: #0077B5;
+    background: var(--accent);
     border-radius: 0;
     transition: all .3s;
 }
 
 .contact .form .btn:hover {
-    color: #0077B5;
+    color: var(--accent);
     background: #222222;
 }
 
@@ -1253,7 +1309,7 @@ a:focus {
     position: relative;
     width: 100%;
     padding: 30px 30px 0 30px;
-    background: #0077B5;
+    background: var(--accent);
 }
 
 .footer .col-md-6:last-child {
@@ -1273,7 +1329,7 @@ a:focus {
 }
 
 .footer a {
-    color: #0077B5;
+    color: var(--accent);
     font-weight: 600;
 }
 

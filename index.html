@@ -20,6 +20,9 @@
         <link href="lib/slick/slick-theme.css" rel="stylesheet">
         <link href="lib/lightbox/css/lightbox.min.css" rel="stylesheet">
 
+        <!-- Devicons -->
+        <link href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css" rel="stylesheet">
+
         <!-- Template Stylesheet -->
         <link href="css/style.css" rel="stylesheet">
     </head>
@@ -28,7 +31,7 @@
         <div class="wrapper">
             <div class="sidebar">
                 <div class="sidebar-header">
-                    <img src="img/profile.jpg" alt="Image">
+                    <img src="img/about.jpg" alt="Image">
                 </div>
                 <div class="sidebar-content">
                     <nav class="navbar navbar-expand-md bg-dark navbar-dark">
@@ -72,10 +75,10 @@
                 <!-- Header Start -->
                 <div class="header" id="header">
                     <div class="content-inner">
-                        <p style="color: #14a800;">I'm</p>
-                        <h1>Aziz Bibitov</h1>
+                        <p style="color: #888888;">I'm</p>
+                        <h1><span class="h1-shine-wrap"><span class="name-text">Aziz Bibitov</span> <i class="fab fa-apple apple-icon"></i> <i class="devicon-swift-plain swift-icon"></i></span></h1>
                         <h2></h2>
-                        <div class="typed-text">Experienced iOS App Developer, Swift Xcode</div>
+                        <div class="typed-text">Experienced iOS App Developer|Swift, SwiftUI, UIKit|End-to-End MVP</div>
                     </div>
                 </div>
                 <!-- Header End -->
@@ -96,20 +99,16 @@
                             <h2>About Me</h2>
                         </div>
                         <div class="row align-items-center">
-                            <div class="col-md-6 col-lg-5">
-                                <img src="img/about.jpg" alt="Image">
-                            </div>
-                            <div class="col-md-6 col-lg-7">
-                             <p>I am a system programmer by education and have been working as an iOS developer for over 5 years.</p>
-                  <strong>Language:</strong> Swift, Objective-C<br />
-                  <strong>UI Frameworks:</strong> UIKit (Storyboards & Programmatic), SwiftUI<br />
-                  <strong>Storage Layer:</strong> Core Data, Realm, SQLite, SwiftData<br />
-                  <strong>Network Layer:</strong> URLSession, Alamofire, Moya<br />
-                  <strong>UI Pattern:</strong> MVVM<br />
-                  <strong>Architecture:</strong> MVVM+C<br />
-                  <strong>Version Control:</strong> Git<br />
-                  <strong>Task Management:</strong> Jira, Trello, ClickUp
-                </p>
+                            <div class="col-12">
+                             <p>👋 I've spent the last 5+ years building iOS apps that ship and stay in the App Store. Video streaming, logistics, e-commerce, social, delivery. I've worked on all of them, usually owning the iOS side from the first screen to the release build.</p>
+                  <p>A few projects I'm proud of:</p>
+                  <p>📺 A subscription video streaming app with on-demand content, live TV, and offline downloads. I handled playback with AVPlayer and VLCKit for Live Channel Streams, and built the UI in SwiftUI.</p>
+                  <p>🚛 An ELD app for commercial trucking. We studied the FMCSA rules and built to them, using the IOSiX SDK for the hardware connection, with constant location tracking and an offline-first setup so nothing got lost when drivers went out of signal.</p>
+                  <p>🛒 A unique MVP marketplace idea app where I integrated Stripe for payments and used Firebase with its Cloud Functions for payment logic and app notifications. It's live with real users abroad.</p>
+                  <p>Beyond those, I've shipped a social app with chat, posts and stories, a couple of cargo and courier delivery apps with live order tracking, a multilingual news app, and an online store. I also joined an AI fitness app and redesigned it, adding new screens and features to a codebase that was already in production.</p>
+                  <p>If you need a full MVP, I can take it the whole way: the app, a Firebase backend, payments, and getting it through App Store review. I work mostly in Swift with SwiftUI and UIKit, and I'm comfortable developing for multiple Apple platforms, including iPadOS, macOS, and watchOS.</p>
+                  <p>I write code that the next person can actually read and extend, I keep you updated throughout the process, and I don't vanish once the project is delivered.</p>
+                  <p>If that sounds like what you need, send me a message and tell me about your project.</p>
                               <a class="btn btn-upwork" href="https://www.upwork.com/freelancers/~016a583c9e00fc71bb"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" width="20" height="20" fill="currentColor" style="vertical-align:middle;margin-right:6px"><path d="M 1 9 C 0.448 9 0 9.448 0 10 L 0 24.115234 C 0 30.276234 4.6829844 35.631469 10.833984 35.980469 C 16.730984 36.314469 21.747875 32.176391 22.796875 26.650391 C 23.366875 27.420391 23.94625 28.135969 24.53125 28.792969 L 21.001953 43.771484 C 20.932953 44.069484 21.002406 44.380094 21.191406 44.621094 C 21.382406 44.859094 21.670563 45 21.976562 45 L 27.095703 45 C 27.559703 45 27.959406 44.687328 28.066406 44.236328 C 28.687406 41.615328 29.660969 37.508156 30.542969 33.785156 L 31.453125 34.3125 C 33.618125 35.4335 35.815 36 38 36 C 45.192 36 50.926 29.641 49.875 22.25 C 49.179 17.354 45.414078 13.318344 40.580078 12.277344 C 34.951078 11.064344 29.525359 13.949141 27.193359 18.744141 C 27.193359 18.744141 26.934562 19.318578 26.726562 19.892578 C 25.076563 17.046578 24.107609 14.094078 23.599609 11.955078 C 23.414609 11.175078 23.137469 9.762875 23.105469 9.671875 C 22.966469 9.268875 22.589109 9 22.162109 9 L 17 9 C 16.448 9 16 9.448 16 10 L 16 24.300781 C 16 26.649781 14.287219 28.750516 11.949219 28.978516 C 9.2672187 29.240516 7 27.13 7 24.5 L 7 10 C 7 9.448 6.552 9 6 9 L 1 9 z M 38 19 C 40.757 19 43 21.243 43 24 C 43 26.757 40.757 29 38 29 C 35.775 29 33.713531 27.658281 32.269531 26.488281 C 32.796531 24.263281 33.15025 22.773047 33.15625 22.748047 C 33.72425 20.541047 35.717 19 38 19 z"/></svg>Available for Work</a>
                             </div>
                         </div>

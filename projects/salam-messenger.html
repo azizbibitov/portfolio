@@ -541,7 +541,9 @@
             });
 
             function scrollToItem(i) {
-                items[i].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+                var item = items[i];
+                var target = item.offsetLeft - (row.clientWidth - item.offsetWidth) / 2;
+                row.scrollTo({ left: target, behavior: 'smooth' });
             }
 
             function currentIndex() {

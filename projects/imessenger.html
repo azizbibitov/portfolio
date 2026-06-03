@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>iMessenger — iOS Messenger UI by Aziz Bibitov</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --accent: #8046F2;
+            --accent-bright: #9B6BFF;
+            --accent-dim: #5A2EC0;
+            --accent-glow: rgba(128,70,242,0.18);
+            --accent-faint: rgba(128,70,242,0.08);
+            --bg: #06040e;
+            --surface: #0e0a1c;
+            --surface2: #160f28;
+            --border: rgba(128,70,242,0.22);
+            --border-neutral: rgba(255,255,255,0.07);
+            --text: #ede8ff;
+            --muted: #8878aa;
+            --white: #ffffff;
+        }
+
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+
+        /* ── NAV ── */
+        nav {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 16px 40px;
+            background: rgba(6,4,14,0.88);
+            backdrop-filter: blur(14px);
+            border-bottom: 1px solid var(--border-neutral);
+        }
+        .nav-logo {
+            font-size: 15px; font-weight: 700; color: var(--white);
+            display: flex; align-items: center; gap: 10px; text-decoration: none;
+        }
+        .nav-logo .im-icon {
+            width: 28px; height: 28px; background: var(--accent); border-radius: 8px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 14px; color: #fff;
+        }
+        .nav-back {
+            display: flex; align-items: center; gap: 8px;
+            color: var(--muted); text-decoration: none;
+            font-size: 14px; font-weight: 500; transition: color 0.2s;
+        }
+        .nav-back:hover { color: var(--accent-bright); }
+
+        /* ── HERO ── */
+        .hero {
+            min-height: 100vh; display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            text-align: center; padding: 120px 24px 80px;
+            position: relative; overflow: hidden;
+        }
+        .hero-bg {
+            position: absolute; inset: 0; pointer-events: none;
+            background: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(128,70,242,0.18) 0%, transparent 70%);
+        }
+        .hero-grid {
+            position: absolute; inset: 0;
+            background-image:
+                linear-gradient(rgba(128,70,242,0.06) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(128,70,242,0.06) 1px, transparent 1px);
+            background-size: 48px 48px;
+            mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 30%, transparent 100%);
+        }
+        .hero-badge {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: var(--accent-faint); border: 1px solid var(--border);
+            border-radius: 100px; padding: 6px 16px;
+            font-size: 12px; font-weight: 700; color: var(--accent-bright);
+            letter-spacing: 0.5px; text-transform: uppercase; margin-bottom: 28px;
+        }
+        .hero-badge .dot {
+            width: 7px; height: 7px; border-radius: 50%; background: var(--accent-bright);
+            animation: pulse 2s ease-in-out infinite;
+        }
+        @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(0.8)} }
+
+        .hero h1 {
+            font-size: clamp(42px, 7vw, 80px); font-weight: 800;
+            letter-spacing: -3px; line-height: 1; color: var(--white); margin-bottom: 20px;
+        }
+        .hero h1 span { color: var(--accent-bright); }
+        .hero p { font-size: 18px; color: var(--muted); max-width: 520px; margin: 0 auto 40px; line-height: 1.7; }
+
+        .hero-cta { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+        .btn-primary {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: var(--accent); color: #fff; font-weight: 700; font-size: 14px;
+            padding: 14px 28px; border-radius: 12px; text-decoration: none;
+            transition: background 0.2s, transform 0.15s;
+        }
+        .btn-primary:hover { background: var(--accent-bright); transform: translateY(-2px); }
+        .btn-ghost {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: transparent; color: var(--text); font-weight: 600; font-size: 14px;
+            padding: 14px 28px; border-radius: 12px;
+            border: 1px solid var(--border-neutral); text-decoration: none;
+            transition: border-color 0.2s, color 0.2s, transform 0.15s;
+        }
+        .btn-ghost:hover { border-color: var(--accent); color: var(--accent-bright); transform: translateY(-2px); }
+
+        /* ── STATS ── */
+        .stats-bar {
+            display: flex; justify-content: center;
+            background: var(--surface);
+            border-top: 1px solid var(--border-neutral);
+            border-bottom: 1px solid var(--border-neutral);
+        }
+        .stat { flex: 1; min-width: 140px; padding: 28px 20px; text-align: center; border-right: 1px solid var(--border-neutral); }
+        .stat:last-child { border-right: none; }
+        .stat-num { font-size: 28px; font-weight: 800; color: var(--accent-bright); line-height: 1; margin-bottom: 6px; }
+        .stat-label { font-size: 12px; color: var(--muted); font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; }
+
+        /* ── SECTIONS ── */
+        section { padding: 96px 24px; }
+        .container { max-width: 1100px; margin: 0 auto; }
+        .section-tag { display: inline-block; font-size: 11px; font-weight: 700; color: var(--accent-bright); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 12px; }
+        .section-title { font-size: clamp(26px, 4vw, 40px); font-weight: 800; color: var(--white); letter-spacing: -1px; margin-bottom: 16px; }
+        .section-sub { font-size: 16px; color: var(--muted); max-width: 560px; line-height: 1.7; }
+
+        /* ── FEATURES ── */
+        .features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 56px; }
+        .feature-card {
+            background: var(--surface); border: 1px solid var(--border-neutral);
+            border-radius: 16px; padding: 28px;
+            transition: border-color 0.2s, transform 0.2s;
+            position: relative; overflow: hidden;
+        }
+        .feature-card::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+            background: linear-gradient(90deg, var(--accent), transparent); opacity: 0; transition: opacity 0.2s;
+        }
+        .feature-card:hover { border-color: var(--border); transform: translateY(-3px); }
+        .feature-card:hover::before { opacity: 1; }
+        .feature-icon {
+            width: 44px; height: 44px; background: var(--accent-faint); border: 1px solid var(--border);
+            border-radius: 12px; display: flex; align-items: center; justify-content: center;
+            font-size: 20px; margin-bottom: 16px;
+        }
+        .feature-card h3 { font-size: 15px; font-weight: 700; color: var(--white); margin-bottom: 10px; }
+        .feature-card p { font-size: 13px; color: var(--muted); line-height: 1.7; }
+
+        /* ── TECH STACK ── */
+        .tech-section { background: var(--surface); }
+        .tech-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 56px; }
+        .tech-col h3 { font-size: 13px; font-weight: 700; color: var(--accent-bright); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 16px; }
+        .tech-pills { display: flex; flex-wrap: wrap; gap: 8px; }
+        .pill {
+            background: var(--accent-faint); border: 1px solid var(--border);
+            border-radius: 100px; padding: 7px 16px;
+            font-size: 13px; font-weight: 600; color: var(--accent-bright);
+            transition: background 0.2s;
+        }
+        .pill:hover { background: var(--accent-glow); }
+        .pill-neutral {
+            background: rgba(255,255,255,0.05); border: 1px solid var(--border-neutral); color: var(--text);
+        }
+        .pill-neutral:hover { background: rgba(255,255,255,0.09); }
+
+        /* ── SCREENSHOTS ── */
+        .screenshots-section { background: var(--surface); overflow: hidden; }
+        .phones-row {
+            display: flex; justify-content: center; align-items: flex-end;
+            gap: 24px; margin-top: 56px; flex-wrap: wrap;
+        }
+        .phone-wrapper { display: flex; flex-direction: column; align-items: center; gap: 14px; }
+        .phone-label { font-size: 11px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
+
+        /* iPhone 14 Pro style (dynamic island) */
+        .iphone {
+            position: relative; width: 170px; border-radius: 22px; background: #111;
+            box-shadow:
+                0 0 0 2px #2a2a2a, 0 0 0 4px #111, 0 0 0 6px #2e2e2e,
+                0 30px 70px rgba(0,0,0,0.8), 0 0 40px rgba(128,70,242,0.12);
+            transition: transform 0.3s;
+        }
+        .iphone:hover { transform: translateY(-8px) scale(1.02); }
+        .iphone.featured {
+            width: 188px; transform: translateY(-18px);
+            box-shadow:
+                0 0 0 2px #2a2a2a, 0 0 0 4px #111, 0 0 0 6px #2e2e2e,
+                0 40px 90px rgba(0,0,0,0.9), 0 0 60px rgba(128,70,242,0.22);
+        }
+        .iphone.featured:hover { transform: translateY(-26px) scale(1.02); }
+        .iphone-inner { margin: 9px; border-radius: 13px; overflow: hidden; background: #000; position: relative; }
+        .iphone-inner img { width: 100%; display: block; }
+        .dynamic-island {
+            position: absolute; top: 11px; left: 50%; transform: translateX(-50%);
+            width: 72px; height: 22px; background: #000; border-radius: 18px; z-index: 5;
+        }
+        .iphone::before { content: ''; position: absolute; right: -3px; top: 90px; width: 3px; height: 56px; background: #2e2e2e; border-radius: 0 3px 3px 0; }
+        .iphone-vol-up, .iphone-vol-down, .iphone-silent { position: absolute; left: -3px; width: 3px; background: #2e2e2e; border-radius: 3px 0 0 3px; }
+        .iphone-silent { top: 76px; height: 26px; }
+        .iphone-vol-up { top: 114px; height: 40px; }
+        .iphone-vol-down { top: 162px; height: 40px; }
+
+        /* ── BACK / FOOTER ── */
+        .back-section { padding: 64px 24px; text-align: center; }
+        .back-section p { color: var(--muted); font-size: 15px; margin-bottom: 24px; }
+        footer { background: var(--surface); border-top: 1px solid var(--border-neutral); padding: 32px 24px; text-align: center; color: var(--muted); font-size: 13px; }
+        footer a { color: var(--accent-bright); text-decoration: none; }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 1024px) { .features-grid { grid-template-columns: 1fr 1fr; } }
+        @media (max-width: 768px) {
+            nav { padding: 14px 20px; }
+            section { padding: 64px 20px; }
+            .hero { padding: 100px 20px 60px; }
+            .features-grid { grid-template-columns: 1fr; }
+            .tech-cols { grid-template-columns: 1fr; gap: 28px; }
+            .stats-bar { display: grid; grid-template-columns: 1fr 1fr; }
+            .stat { border-right: none; border-bottom: 1px solid var(--border-neutral); }
+            .stat:nth-child(odd) { border-right: 1px solid var(--border-neutral); }
+            .stat:nth-child(3), .stat:nth-child(4) { border-bottom: none; }
+            .phones-row {
+                flex-wrap: nowrap; justify-content: flex-start;
+                overflow-x: auto; -webkit-overflow-scrolling: touch;
+                scroll-snap-type: x mandatory;
+                padding: 20px 20px 32px; margin: 44px -20px 0; gap: 16px; align-items: flex-end;
+            }
+            .phones-row::-webkit-scrollbar { display: none; }
+            .phone-wrapper { scroll-snap-align: center; flex-shrink: 0; }
+            .iphone { width: 146px; border-radius: 19px; }
+            .iphone.featured { width: 160px; transform: translateY(-10px); }
+            .iphone-inner { margin: 8px; border-radius: 11px; }
+            .dynamic-island { width: 60px; height: 19px; top: 9px; }
+        }
+        @media (max-width: 400px) {
+            .iphone { width: 130px; border-radius: 17px; }
+            .iphone.featured { width: 143px; }
+            .iphone-inner { border-radius: 10px; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+    <a href="../index.html#portfolio" class="nav-logo">
+        <span class="im-icon"><i class="fa fa-comment"></i></span>
+        iMessenger
+    </a>
+    <a href="../index.html#portfolio" class="nav-back">
+        <i class="fa fa-arrow-left"></i> Back to Portfolio
+    </a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-grid"></div>
+    <div class="hero-badge"><span class="dot"></span> iOS App</div>
+    <h1>i<span>Messenger</span></h1>
+    <p>A full-featured iOS messenger UI with chat rooms, stories, social feed, music player, services tab, and rich profile settings — built entirely in UIKit.</p>
+    <div class="hero-cta">
+        <a href="https://github.com/azizbibitov/imessenger-ios-ui" target="_blank" class="btn-primary">
+            <i class="fab fa-github"></i> View on GitHub
+        </a>
+        <a href="../index.html#portfolio" class="btn-ghost">
+            <i class="fa fa-arrow-left"></i> Back to Portfolio
+        </a>
+    </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-bar">
+    <div class="stat"><div class="stat-num">UIKit</div><div class="stat-label">Framework</div></div>
+    <div class="stat"><div class="stat-num">MVC</div><div class="stat-label">Architecture</div></div>
+    <div class="stat"><div class="stat-num">Dark</div><div class="stat-label">Mode Support</div></div>
+    <div class="stat"><div class="stat-num">iOS</div><div class="stat-label">Platform</div></div>
+</div>
+
+<!-- FEATURES -->
+<section>
+    <div class="container">
+        <span class="section-tag">Features</span>
+        <h2 class="section-title">What it includes</h2>
+        <p class="section-sub">A complete messenger UI concept covering every major screen a real messaging app would have.</p>
+
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">💬</div>
+                <h3>Chat List &amp; Room</h3>
+                <p>Chat list with stories strip at the top, per-conversation message bubbles with sent/received states, keyboard handling, and a custom text input view with emoji support.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📖</div>
+                <h3>Stories</h3>
+                <p>Full-screen story viewer with a segmented progress bar that auto-advances through slides. Stories are accessible from the horizontal strip on the chat list.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🗞️</div>
+                <h3>Social Feed</h3>
+                <p>Paged feed with posts — profile pictures, like/comment/share/bookmark actions, and a search bar. Supports multiple feed tabs via a paging view controller.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🎵</div>
+                <h3>Music Player</h3>
+                <p>Dedicated music tab with a track list and a custom player UI. Integrated as a full tab alongside Chat, Feed, Services, and Profile.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🔐</div>
+                <h3>Pin Code Lock</h3>
+                <p>App lock with pin code entry and confirmation screens. Uses UserDefaults for persistence. Custom dot-based pin indicator with shake animation on wrong input.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🎨</div>
+                <h3>Appearance &amp; Themes</h3>
+                <p>Appearance screen lets users pick custom UI accent colors from a collection view of color swatches. Dark mode fully supported across all screens via named color assets.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- TECH STACK -->
+<section class="tech-section">
+    <div class="container">
+        <span class="section-tag">Technology</span>
+        <h2 class="section-title">Tech Stack</h2>
+        <p class="section-sub">Pure UIKit with EasyPeasy for Auto Layout, named color assets for dark mode, and MVC architecture throughout.</p>
+
+        <div class="tech-cols">
+            <div class="tech-col">
+                <h3>iOS App</h3>
+                <div class="tech-pills">
+                    <span class="pill">UIKit</span>
+                    <span class="pill">EasyPeasy</span>
+                    <span class="pill">MVC</span>
+                    <span class="pill">AVFoundation</span>
+                    <span class="pill">UserDefaults</span>
+                    <span class="pill pill-neutral">iOS 15+</span>
+                    <span class="pill pill-neutral">Named Color Assets</span>
+                    <span class="pill pill-neutral">Dark Mode</span>
+                </div>
+            </div>
+            <div class="tech-col">
+                <h3>Key Screens</h3>
+                <div class="tech-pills">
+                    <span class="pill">Chat Room</span>
+                    <span class="pill">Stories</span>
+                    <span class="pill">Feed + Paging</span>
+                    <span class="pill">Music Player</span>
+                    <span class="pill pill-neutral">Pin Code Lock</span>
+                    <span class="pill pill-neutral">QR Code</span>
+                    <span class="pill pill-neutral">Appearance Picker</span>
+                    <span class="pill pill-neutral">Country Code</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- SCREENSHOTS -->
+<section class="screenshots-section">
+    <div class="container">
+        <span class="section-tag">App Screens</span>
+        <h2 class="section-title">Screenshots</h2>
+        <p class="section-sub">All screens from the app running on iPhone 14 Pro simulator.</p>
+
+        <div class="phones-row">
+            <div class="phone-wrapper">
+                <div class="iphone"><div class="iphone-silent"></div><div class="iphone-vol-up"></div><div class="iphone-vol-down"></div>
+                    <div class="iphone-inner"><div class="dynamic-island"></div><img src="../img/imessenger-1.png" alt="Chat List"></div>
+                </div><span class="phone-label">Chat List</span>
+            </div>
+            <div class="phone-wrapper">
+                <div class="iphone"><div class="iphone-silent"></div><div class="iphone-vol-up"></div><div class="iphone-vol-down"></div>
+                    <div class="iphone-inner"><div class="dynamic-island"></div><img src="../img/imessenger-2.png" alt="Chat Room"></div>
+                </div><span class="phone-label">Chat Room</span>
+            </div>
+            <div class="phone-wrapper">
+                <div class="iphone featured"><div class="iphone-silent"></div><div class="iphone-vol-up"></div><div class="iphone-vol-down"></div>
+                    <div class="iphone-inner"><div class="dynamic-island"></div><img src="../img/imessenger-3.png" alt="Chat Keyboard"></div>
+                </div><span class="phone-label">Keyboard</span>
+            </div>
+            <div class="phone-wrapper">
+                <div class="iphone"><div class="iphone-silent"></div><div class="iphone-vol-up"></div><div class="iphone-vol-down"></div>
+                    <div class="iphone-inner"><div class="dynamic-island"></div><img src="../img/imessenger-4.png" alt="Feed"></div>
+                </div><span class="phone-label">Feed</span>
+            </div>
+            <div class="phone-wrapper">
+                <div class="iphone"><div class="iphone-silent"></div><div class="iphone-vol-up"></div><div class="iphone-vol-down"></div>
+                    <div class="iphone-inner"><div class="dynamic-island"></div><img src="../img/imessenger-5.png" alt="All Feed"></div>
+                </div><span class="phone-label">All Feed</span>
+            </div>
+            <div class="phone-wrapper">
+                <div class="iphone"><div class="iphone-silent"></div><div class="iphone-vol-up"></div><div class="iphone-vol-down"></div>
+                    <div class="iphone-inner"><div class="dynamic-island"></div><img src="../img/imessenger-6.png" alt="Story"></div>
+                </div><span class="phone-label">Story</span>
+            </div>
+            <div class="phone-wrapper">
+                <div class="iphone"><div class="iphone-silent"></div><div class="iphone-vol-up"></div><div class="iphone-vol-down"></div>
+                    <div class="iphone-inner"><div class="dynamic-island"></div><img src="../img/imessenger-7.png" alt="Services"></div>
+                </div><span class="phone-label">Services</span>
+            </div>
+            <div class="phone-wrapper">
+                <div class="iphone"><div class="iphone-silent"></div><div class="iphone-vol-up"></div><div class="iphone-vol-down"></div>
+                    <div class="iphone-inner"><div class="dynamic-island"></div><img src="../img/imessenger-8.png" alt="Music"></div>
+                </div><span class="phone-label">Music</span>
+            </div>
+            <div class="phone-wrapper">
+                <div class="iphone"><div class="iphone-silent"></div><div class="iphone-vol-up"></div><div class="iphone-vol-down"></div>
+                    <div class="iphone-inner"><div class="dynamic-island"></div><img src="../img/imessenger-9.png" alt="Profile"></div>
+                </div><span class="phone-label">Profile</span>
+            </div>
+            <div class="phone-wrapper">
+                <div class="iphone"><div class="iphone-silent"></div><div class="iphone-vol-up"></div><div class="iphone-vol-down"></div>
+                    <div class="iphone-inner"><div class="dynamic-island"></div><img src="../img/imessenger-10.png" alt="Appearance"></div>
+                </div><span class="phone-label">Appearance</span>
+            </div>
+            <div class="phone-wrapper">
+                <div class="iphone"><div class="iphone-silent"></div><div class="iphone-vol-up"></div><div class="iphone-vol-down"></div>
+                    <div class="iphone-inner"><div class="dynamic-island"></div><img src="../img/imessenger-11.png" alt="Notifications"></div>
+                </div><span class="phone-label">Notifications</span>
+            </div>
+            <div class="phone-wrapper">
+                <div class="iphone"><div class="iphone-silent"></div><div class="iphone-vol-up"></div><div class="iphone-vol-down"></div>
+                    <div class="iphone-inner"><div class="dynamic-island"></div><img src="../img/imessenger-12.png" alt="QR Code"></div>
+                </div><span class="phone-label">QR Code</span>
+            </div>
+            <div class="phone-wrapper">
+                <div class="iphone"><div class="iphone-silent"></div><div class="iphone-vol-up"></div><div class="iphone-vol-down"></div>
+                    <div class="iphone-inner"><div class="dynamic-island"></div><img src="../img/imessenger-13.png" alt="Add Contact"></div>
+                </div><span class="phone-label">Add Contact</span>
+            </div>
+            <div class="phone-wrapper">
+                <div class="iphone"><div class="iphone-silent"></div><div class="iphone-vol-up"></div><div class="iphone-vol-down"></div>
+                    <div class="iphone-inner"><div class="dynamic-island"></div><img src="../img/imessenger-14.png" alt="Pin Code"></div>
+                </div><span class="phone-label">Pin Code</span>
+            </div>
+            <div class="phone-wrapper">
+                <div class="iphone"><div class="iphone-silent"></div><div class="iphone-vol-up"></div><div class="iphone-vol-down"></div>
+                    <div class="iphone-inner"><div class="dynamic-island"></div><img src="../img/imessenger-15.png" alt="Edit Profile"></div>
+                </div><span class="phone-label">Edit Profile</span>
+            </div>
+            <div class="phone-wrapper">
+                <div class="iphone"><div class="iphone-silent"></div><div class="iphone-vol-up"></div><div class="iphone-vol-down"></div>
+                    <div class="iphone-inner"><div class="dynamic-island"></div><img src="../img/imessenger-16.png" alt="Country Code"></div>
+                </div><span class="phone-label">Country Code</span>
+            </div>
+            <div class="phone-wrapper">
+                <div class="iphone"><div class="iphone-silent"></div><div class="iphone-vol-up"></div><div class="iphone-vol-down"></div>
+                    <div class="iphone-inner"><div class="dynamic-island"></div><img src="../img/imessenger-17.png" alt="Movies"></div>
+                </div><span class="phone-label">Movies</span>
+            </div>
+            <div class="phone-wrapper">
+                <div class="iphone"><div class="iphone-silent"></div><div class="iphone-vol-up"></div><div class="iphone-vol-down"></div>
+                    <div class="iphone-inner"><div class="dynamic-island"></div><img src="../img/imessenger-18.png" alt="Books"></div>
+                </div><span class="phone-label">Books</span>
+            </div>
+            <div class="phone-wrapper">
+                <div class="iphone"><div class="iphone-silent"></div><div class="iphone-vol-up"></div><div class="iphone-vol-down"></div>
+                    <div class="iphone-inner"><div class="dynamic-island"></div><img src="../img/imessenger-19.png" alt="Dark Chat List"></div>
+                </div><span class="phone-label">Dark Mode</span>
+            </div>
+            <div class="phone-wrapper">
+                <div class="iphone"><div class="iphone-silent"></div><div class="iphone-vol-up"></div><div class="iphone-vol-down"></div>
+                    <div class="iphone-inner"><div class="dynamic-island"></div><img src="../img/imessenger-20.png" alt="Dark Chat Room"></div>
+                </div><span class="phone-label">Dark Chat</span>
+            </div>
+            <div class="phone-wrapper">
+                <div class="iphone"><div class="iphone-silent"></div><div class="iphone-vol-up"></div><div class="iphone-vol-down"></div>
+                    <div class="iphone-inner"><div class="dynamic-island"></div><img src="../img/imessenger-21.png" alt="Dark Feed"></div>
+                </div><span class="phone-label">Dark Feed</span>
+            </div>
+            <div class="phone-wrapper">
+                <div class="iphone"><div class="iphone-silent"></div><div class="iphone-vol-up"></div><div class="iphone-vol-down"></div>
+                    <div class="iphone-inner"><div class="dynamic-island"></div><img src="../img/imessenger-22.png" alt="Dark Profile"></div>
+                </div><span class="phone-label">Dark Profile</span>
+            </div>
+            <div class="phone-wrapper">
+                <div class="iphone"><div class="iphone-silent"></div><div class="iphone-vol-up"></div><div class="iphone-vol-down"></div>
+                    <div class="iphone-inner"><div class="dynamic-island"></div><img src="../img/imessenger-23.png" alt="Settings"></div>
+                </div><span class="phone-label">Settings</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- BACK -->
+<div class="back-section">
+    <p>Want to see the code?</p>
+    <div class="hero-cta">
+        <a href="https://github.com/azizbibitov/imessenger-ios-ui" target="_blank" class="btn-primary">
+            <i class="fab fa-github"></i> View on GitHub
+        </a>
+        <a href="../index.html#contact" class="btn-ghost">
+            <i class="fa fa-envelope"></i> Get in Touch
+        </a>
+    </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+    <p>Aziz Bibitov — iOS Developer &nbsp;·&nbsp; <a href="mailto:azizbibitov11@gmail.com">azizbibitov11@gmail.com</a> &nbsp;·&nbsp; <a href="../index.html">Portfolio</a></p>
+</footer>
+
+</body>
+</html>

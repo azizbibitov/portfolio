@@ -458,16 +458,58 @@
         footer a { color: var(--teal); text-decoration: none; }
 
         /* ── RESPONSIVE ── */
+
+        /* Tablet */
+        @media (max-width: 1024px) {
+            .phones-row { gap: 16px; }
+            .iphone { width: 160px; }
+            .iphone.featured { width: 176px; }
+        }
+
+        /* Mobile */
         @media (max-width: 768px) {
             nav { padding: 14px 20px; }
-            .about-grid { grid-template-columns: 1fr; }
+            section { padding: 64px 20px; }
+
+            .hero { padding: 100px 20px 60px; }
+            .hero h1 { letter-spacing: -2px; }
+            .hero p { font-size: 16px; }
+
+            .about-grid { grid-template-columns: 1fr; gap: 16px; }
             .tasks-grid { grid-template-columns: 1fr; }
-            .phones-row { gap: 14px; }
-            .iphone { width: 140px; border-radius: 36px; }
-            .iphone.featured { width: 155px; transform: translateY(-12px); }
-            .iphone-inner { margin: 8px; border-radius: 29px; }
-            .dynamic-island { width: 60px; height: 20px; top: 9px; }
-            .stat { min-width: 120px; }
+
+            /* Stats: 2x2 grid on mobile */
+            .stats-bar { display: grid; grid-template-columns: 1fr 1fr; }
+            .stat { border-right: none; border-bottom: 1px solid var(--border); }
+            .stat:nth-child(odd) { border-right: 1px solid var(--border); }
+            .stat:nth-child(3), .stat:nth-child(4) { border-bottom: none; }
+
+            /* Phones: horizontal scroll strip */
+            .screenshots-section { overflow: hidden; }
+            .phones-row {
+                flex-wrap: nowrap;
+                justify-content: flex-start;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                scroll-snap-type: x mandatory;
+                padding: 20px 20px 32px;
+                margin: 44px -20px 0;
+                gap: 16px;
+                align-items: flex-end;
+            }
+            .phones-row::-webkit-scrollbar { display: none; }
+            .phone-wrapper { scroll-snap-align: center; flex-shrink: 0; }
+            .iphone { width: 150px; border-radius: 38px; }
+            .iphone.featured { width: 166px; transform: translateY(-12px); box-shadow: 0 0 0 2px #2a2a2a, 0 0 0 4px #111, 0 0 0 6px #333, 0 30px 80px rgba(0,0,0,0.7), 0 0 40px rgba(0,188,212,0.18); }
+            .iphone.featured:hover { transform: translateY(-18px) scale(1.02); }
+            .iphone-inner { margin: 8px; border-radius: 31px; }
+            .dynamic-island { width: 64px; height: 22px; top: 10px; }
+        }
+
+        @media (max-width: 400px) {
+            .iphone { width: 130px; border-radius: 34px; }
+            .iphone.featured { width: 144px; }
+            .iphone-inner { border-radius: 27px; }
         }
     </style>
 </head>

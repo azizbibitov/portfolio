@@ -263,23 +263,13 @@
         .mac-wrapper { display: flex; flex-direction: column; align-items: center; gap: 14px; }
 
         .mac-window {
-            border-radius: 10px; overflow: hidden;
+            border-radius: 12px; overflow: hidden;
             box-shadow: 0 0 0 1px rgba(255,255,255,0.08), 0 24px 60px rgba(0,0,0,0.8), 0 0 40px rgba(229,57,53,0.08);
-            background: #1e1e1e; transition: transform 0.3s;
+            transition: transform 0.3s;
             max-width: 480px; width: 100%;
         }
         .mac-window:hover { transform: translateY(-6px); }
-        .mac-titlebar {
-            background: #2a2a2a; padding: 10px 14px;
-            display: flex; align-items: center; gap: 8px;
-            border-bottom: 1px solid rgba(255,255,255,0.06);
-        }
-        .traffic { display: flex; gap: 7px; }
-        .traffic span { width: 12px; height: 12px; border-radius: 50%; }
-        .t-red { background: #FF5F57; }
-        .t-yellow { background: #FEBC2E; }
-        .t-green { background: #28C840; }
-        .mac-content img { width: 100%; display: block; }
+        .mac-content img { width: 100%; display: block; border-radius: 12px; }
 
         /* Tab panels */
         .tab-panel { display: none; }
@@ -549,36 +539,24 @@
             <div class="macos-row">
                 <div class="mac-wrapper">
                     <div class="mac-window">
-                        <div class="mac-titlebar">
-                            <div class="traffic"><span class="t-red"></span><span class="t-yellow"></span><span class="t-green"></span></div>
-                        </div>
                         <div class="mac-content"><img src="../img/yt-mac-search.png" alt="macOS Search"></div>
                     </div>
                     <span class="phone-label">Search &amp; Fetch</span>
                 </div>
                 <div class="mac-wrapper">
                     <div class="mac-window">
-                        <div class="mac-titlebar">
-                            <div class="traffic"><span class="t-red"></span><span class="t-yellow"></span><span class="t-green"></span></div>
-                        </div>
                         <div class="mac-content"><img src="../img/yt-mac-quality.png" alt="macOS Quality"></div>
                     </div>
                     <span class="phone-label">Quality Picker</span>
                 </div>
                 <div class="mac-wrapper">
                     <div class="mac-window">
-                        <div class="mac-titlebar">
-                            <div class="traffic"><span class="t-red"></span><span class="t-yellow"></span><span class="t-green"></span></div>
-                        </div>
                         <div class="mac-content"><img src="../img/yt-mac-downloading.png" alt="macOS Downloading"></div>
                     </div>
                     <span class="phone-label">Downloading</span>
                 </div>
                 <div class="mac-wrapper">
                     <div class="mac-window">
-                        <div class="mac-titlebar">
-                            <div class="traffic"><span class="t-red"></span><span class="t-yellow"></span><span class="t-green"></span></div>
-                        </div>
                         <div class="mac-content"><img src="../img/yt-mac-completed.png" alt="macOS Completed"></div>
                     </div>
                     <span class="phone-label">Completed</span>

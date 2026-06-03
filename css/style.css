@@ -1133,9 +1133,6 @@ a:focus {
     pointer-events: none;
 }
 
-.portfolio .portfolio-item figure:hover::after {
-    opacity: 0;
-}
 
 /**********************************/
 /*********** Review CSS ***********/

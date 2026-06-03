@@ -528,11 +528,11 @@ a:focus {
 }
 
 .portfolio-sub-heading {
-    font-size: 11px;
+    font-size: 16px;
     font-weight: 700;
-    letter-spacing: 3px;
+    letter-spacing: 2px;
     text-transform: uppercase;
-    color: #999;
+    color: #777;
     margin: 44px 15px 20px;
     display: flex;
     align-items: center;

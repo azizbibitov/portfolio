@@ -978,15 +978,17 @@ a:focus {
 .portfolio .portfolio-item figure .link-preview {
     left: 50%;
     top: calc(25% - 18px);
+    z-index: 10;
 }
 
 .portfolio .portfolio-item figure .link-details {
     right: 50%;
     top: calc(25% - 18px);
+    z-index: 10;
 }
 .portfolio .portfolio-item figure .link-github {
     position: absolute;
-    z-index: 5;
+    z-index: 10;
     right: 50%;
     top: calc(25% - 18px);
     transform: translateX(50%);
@@ -1012,16 +1014,23 @@ a:focus {
 .portfolio .portfolio-item figure .portfolio-title {
     margin: 0;
     width: 100%;
-    height: 50%;
+    height: 100%;
     left: 0;
     right: 0;
-    top: 100%;
-    padding: 30px 10px;
+    top: 0;
+    bottom: 0;
+    padding: 0 10px 20px;
     color: #222222;
     font-size: 16px;
     font-weight: 600;
-    background: rgba(var(--accent-rgb), .5);
+    background: transparent;
     border-radius: 0;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    text-align: center;
 }
 
 .portfolio .portfolio-item figure .portfolio-title:hover {
@@ -1053,7 +1062,8 @@ a:focus {
 
 .portfolio .portfolio-item figure:hover .portfolio-title {
     opacity: 1;
-    top: 50%;
+    top: 0;
+    background: rgba(var(--accent-rgb), .5);
 }
 
 

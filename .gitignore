@@ -1,1 +1,3 @@
-Gitignora content 
+.DS_Store
+**/.DS_Store
+.claude/

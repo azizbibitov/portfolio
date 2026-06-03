@@ -339,163 +339,73 @@
         }
 
         /* ── SCREENSHOTS ── */
-        .screenshots-section { background: var(--surface); overflow: hidden; }
+                .screenshots-section { background: var(--surface); overflow: hidden; }
+        .carousel-wrapper { position: relative; }
         .phones-row {
-            display: flex;
-            justify-content: center;
-            align-items: flex-end;
-            gap: 24px;
-            margin-top: 64px;
-            flex-wrap: wrap;
+            display: flex; align-items: center;
+            gap: 20px; margin-top: 40px;
+            overflow-x: auto; -webkit-overflow-scrolling: touch;
+            scroll-snap-type: x mandatory;
+            padding: 40px 60px 48px;
+            scrollbar-width: none;
         }
-        .phone-wrapper {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 16px;
+        .phones-row::-webkit-scrollbar { display: none; }
+        .phone-wrapper { scroll-snap-align: center; flex-shrink: 0; display: flex; flex-direction: column; align-items: center; }
+        .carousel-btn {
+            position: absolute; top: 50%; transform: translateY(-50%);
+            z-index: 10; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.14);
+            color: #fff; width: 44px; height: 44px; border-radius: 50%; cursor: pointer;
+            font-size: 26px; display: flex; align-items: center; justify-content: center;
+            transition: background 0.2s; backdrop-filter: blur(8px); line-height: 1; padding: 0;
         }
-        .phone-wrapper .phone-label {
-            font-size: 12px;
-            font-weight: 600;
-            color: var(--muted);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
+        .carousel-btn:hover { background: rgba(255,255,255,0.18); }
+        .carousel-btn.prev { left: 8px; }
+        .carousel-btn.next { right: 8px; }
+        .carousel-dots { display: flex; justify-content: center; gap: 6px; padding-bottom: 40px; }
+        .carousel-dot { width: 6px; height: 6px; border-radius: 50%; background: rgba(255,255,255,0.2); transition: all 0.25s; cursor: pointer; flex-shrink: 0; }
+        .carousel-dot.active { background: var(--accent); width: 20px; border-radius: 3px; }
 
-        /* iPhone frame */
+        /* iPhone 11 frame */
         .iphone {
-            position: relative;
-            width: 190px;
-            border-radius: 22px;
-            background: #111;
+            position: relative; width: 220px; border-radius: 26px; background: #1c1c1c;
             box-shadow:
-                0 0 0 2px #2a2a2a,
-                0 0 0 4px #111,
-                0 0 0 6px #333,
-                0 30px 80px rgba(0,0,0,0.7),
-                0 0 40px rgba(0,188,212,0.12);
+                inset 0 0 0 1px #3a3a3a,
+                0 0 0 1px #111,
+                0 30px 70px rgba(0,0,0,0.85), 0 0 40px rgba(var(--accent-rgb),0.12);
             transition: transform 0.3s;
         }
         .iphone:hover { transform: translateY(-8px) scale(1.02); }
         .iphone.featured {
-            width: 210px;
-            transform: translateY(-20px);
             box-shadow:
-                0 0 0 2px #2a2a2a,
-                0 0 0 4px #111,
-                0 0 0 6px #333,
-                0 40px 100px rgba(0,0,0,0.8),
-                0 0 60px rgba(0,188,212,0.2);
+                inset 0 0 0 1px #3a3a3a,
+                0 0 0 1px #111,
+                0 40px 90px rgba(0,0,0,0.9), 0 0 60px rgba(var(--accent-rgb),0.22);
         }
-        .iphone.featured:hover { transform: translateY(-28px) scale(1.02); }
-
         .iphone-inner {
-            margin: 10px;
-            border-radius: 13px;
-            overflow: hidden;
-            background: #000;
-            position: relative;
+            margin: 14px; border-radius: 15px; overflow: hidden;
+            background: #000; position: relative;
         }
-        .iphone-inner img {
-            width: 100%;
-            display: block;
-        }
-
-        /* Buttons */
+        .iphone-inner img { width: 100%; display: block; }
         .iphone::before {
-            content: '';
-            position: absolute;
-            right: -3px;
-            top: 100px;
-            width: 3px; height: 60px;
-            background: #333;
-            border-radius: 0 3px 3px 0;
+            content: \'\'; position: absolute; right: -3px; top: 26%;
+            width: 3px; height: 14%; background: #333; border-radius: 0 2px 2px 0;
         }
-        .iphone-vol-up, .iphone-vol-down, .iphone-silent {
-            position: absolute;
-            left: -3px;
-            width: 3px;
-            background: #333;
-            border-radius: 3px 0 0 3px;
+        .iphone-silent { position: absolute; left: -3px; top: 18%; width: 3px; height: 6%; background: #333; border-radius: 2px 0 0 2px; }
+        .iphone-vol-up  { position: absolute; left: -3px; top: 28%; width: 3px; height: 9%; background: #333; border-radius: 2px 0 0 2px; }
+        .iphone-vol-down{ position: absolute; left: -3px; top: 40%; width: 3px; height: 9%; background: #333; border-radius: 2px 0 0 2px; }
+        .iphone-home-bar {
+            position: absolute; bottom: 6px; left: 50%; transform: translateX(-50%);
+            width: 36%; height: 4px; background: #444; border-radius: 2px;
         }
-        .iphone-silent { top: 80px; height: 28px; }
-        .iphone-vol-up { top: 120px; height: 44px; }
-        .iphone-vol-down { top: 172px; height: 44px; }
-
-        /* ── BACK LINK ── */
-        .back-section {
-            padding: 64px 24px;
-            text-align: center;
-        }
-        .back-section p {
-            color: var(--muted);
-            font-size: 15px;
-            margin-bottom: 24px;
-        }
-
-        /* ── FOOTER ── */
-        footer {
-            background: var(--surface);
-            border-top: 1px solid var(--border);
-            padding: 32px 24px;
-            text-align: center;
-            color: var(--muted);
-            font-size: 13px;
-        }
-        footer a { color: var(--teal); text-decoration: none; }
-
-        /* ── RESPONSIVE ── */
-
-        /* Tablet */
-        @media (max-width: 1024px) {
-            .phones-row { gap: 16px; }
-            .iphone { width: 160px; border-radius: 19px; }
-            .iphone.featured { width: 176px; }
-        }
-
-        /* Mobile */
         @media (max-width: 768px) {
-            nav { padding: 14px 20px; }
-            section { padding: 64px 20px; }
-
-            .hero { padding: 100px 20px 60px; }
-            .hero h1 { letter-spacing: -2px; }
-            .hero p { font-size: 16px; }
-
-            .about-grid { grid-template-columns: 1fr; gap: 16px; }
-            .tasks-grid { grid-template-columns: 1fr; }
-
-            /* Stats: 2x2 grid on mobile */
-            .stats-bar { display: grid; grid-template-columns: 1fr 1fr; }
-            .stat { border-right: none; border-bottom: 1px solid var(--border); }
-            .stat:nth-child(odd) { border-right: 1px solid var(--border); }
-            .stat:nth-child(3), .stat:nth-child(4) { border-bottom: none; }
-
-            /* Phones: horizontal scroll strip */
-            .screenshots-section { overflow: hidden; }
-            .phones-row {
-                flex-wrap: nowrap;
-                justify-content: flex-start;
-                overflow-x: auto;
-                -webkit-overflow-scrolling: touch;
-                scroll-snap-type: x mandatory;
-                padding: 20px 20px 32px;
-                margin: 44px -20px 0;
-                gap: 16px;
-                align-items: flex-end;
-            }
-            .phones-row::-webkit-scrollbar { display: none; }
-            .phone-wrapper { scroll-snap-align: center; flex-shrink: 0; }
-            .iphone { width: 150px; border-radius: 19px; }
-            .iphone.featured { width: 166px; transform: translateY(-12px); box-shadow: 0 0 0 2px #2a2a2a, 0 0 0 4px #111, 0 0 0 6px #333, 0 30px 80px rgba(0,0,0,0.7), 0 0 40px rgba(0,188,212,0.18); }
-            .iphone.featured:hover { transform: translateY(-18px) scale(1.02); }
-            .iphone-inner { margin: 8px; border-radius: 11px; }
+            .iphone { width: 180px; border-radius: 22px; }
+            .iphone-inner { margin: 11px; border-radius: 12px; }
+            .phones-row { padding: 24px 20px 36px; gap: 14px; }
+            .carousel-btn { display: none; }
         }
-
         @media (max-width: 400px) {
-            .iphone { width: 130px; border-radius: 17px; }
-            .iphone.featured { width: 144px; }
-            .iphone-inner { border-radius: 10px; }
+            .iphone { width: 155px; border-radius: 19px; }
+            .iphone-inner { margin: 10px; border-radius: 11px; }
         }
     </style>
 </head>
@@ -693,7 +603,9 @@
             <h2 class="section-title">In the Wild</h2>
             <p class="section-sub">Real screenshots from the live app, showing the story feed, messaging, and profile screens.</p>
 
-            <div class="phones-row">
+            <div class="carousel-wrapper">
+        <button class="carousel-btn prev">&#8249;</button>
+        <div class="phones-row">
                 <div class="phone-wrapper">
                     <div class="iphone">
                         <div class="iphone-silent"></div>
@@ -704,7 +616,6 @@
                             <img src="../img/clik-screen-1.png" alt="Home - VIP & Circle Stories">
                         </div>
                     </div>
-                    <span class="phone-label">Home</span>
                 </div>
 
                 <div class="phone-wrapper">
@@ -717,7 +628,6 @@
                             <img src="../img/clik-screen-2.png" alt="Messages">
                         </div>
                     </div>
-                    <span class="phone-label">Messages</span>
                 </div>
 
                 <div class="phone-wrapper">
@@ -730,7 +640,6 @@
                             <img src="../img/clik-screen-3.png" alt="Chat">
                         </div>
                     </div>
-                    <span class="phone-label">Chat</span>
                 </div>
 
                 <div class="phone-wrapper">
@@ -743,7 +652,6 @@
                             <img src="../img/clik-screen-4.png" alt="My People">
                         </div>
                     </div>
-                    <span class="phone-label">My People</span>
                 </div>
 
                 <div class="phone-wrapper">
@@ -756,7 +664,6 @@
                             <img src="../img/clik-screen-5.png" alt="Profile">
                         </div>
                     </div>
-                    <span class="phone-label">Profile</span>
                 </div>
             </div>
         </div>
@@ -780,5 +687,48 @@
         <p>Aziz Bibitov — iOS Developer &nbsp;·&nbsp; <a href="mailto:azizbibitov11@gmail.com">azizbibitov11@gmail.com</a> &nbsp;·&nbsp; <a href="../index.html">Portfolio</a></p>
     </footer>
 
+    <script>
+    (function() {
+        document.querySelectorAll('.carousel-wrapper').forEach(function(wrapper) {
+            var row = wrapper.querySelector('.phones-row');
+            var prevBtn = wrapper.querySelector('.carousel-btn.prev');
+            var nextBtn = wrapper.querySelector('.carousel-btn.next');
+            var dotsEl = wrapper.parentElement.querySelector('.carousel-dots');
+            var items = Array.from(row.querySelectorAll('.phone-wrapper'));
+            var dots = [];
+
+            items.forEach(function(_, i) {
+                var dot = document.createElement('span');
+                dot.className = 'carousel-dot' + (i === 0 ? ' active' : '');
+                dot.addEventListener('click', function() { scrollToItem(i); });
+                dotsEl.appendChild(dot);
+                dots.push(dot);
+            });
+
+            function scrollToItem(i) {
+                items[i].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+            }
+
+            function currentIndex() {
+                var center = row.scrollLeft + row.clientWidth / 2;
+                var closest = 0, minDist = Infinity;
+                items.forEach(function(item, i) {
+                    var d = Math.abs((item.offsetLeft + item.offsetWidth / 2) - center);
+                    if (d < minDist) { minDist = d; closest = i; }
+                });
+                return closest;
+            }
+
+            function updateDots() {
+                var idx = currentIndex();
+                dots.forEach(function(d, i) { d.classList.toggle('active', i === idx); });
+            }
+
+            row.addEventListener('scroll', updateDots, { passive: true });
+            if (prevBtn) prevBtn.addEventListener('click', function() { scrollToItem(Math.max(0, currentIndex() - 1)); });
+            if (nextBtn) nextBtn.addEventListener('click', function() { scrollToItem(Math.min(items.length - 1, currentIndex() + 1)); });
+        });
+    })();
+    </script>
 </body>
 </html>

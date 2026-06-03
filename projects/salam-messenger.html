@@ -220,7 +220,7 @@
         }
         .iphone-inner img { width: 100%; display: block; }
         .iphone::before {
-            content: \'\'; position: absolute; right: -3px; top: 26%;
+            content: ''; position: absolute; right: -3px; top: 26%;
             width: 3px; height: 14%; background: #333; border-radius: 0 2px 2px 0;
         }
         .iphone-silent { position: absolute; left: -3px; top: 18%; width: 3px; height: 6%; background: #333; border-radius: 2px 0 0 2px; }
@@ -501,14 +501,6 @@
     </div>
 </section>
 
-<!-- Lightbox -->
-<div class="lb-overlay" id="lb" onclick="lbClose(event)">
-    <span class="lb-close" onclick="lbHide()">&#10005;</span>
-    <span class="lb-arrow prev" onclick="lbNav(-1,event)">&#8249;</span>
-    <img class="lb-img" id="lb-img" src="" alt="">
-    <span class="lb-arrow next" onclick="lbNav(1,event)">&#8250;</span>
-</div>
-
 <!-- BACK -->
 <div class="back-section">
     <p>Interested in my other projects?</p>
@@ -529,32 +521,6 @@
 <footer>
     <p>Aziz Bibitov — iOS Developer &nbsp;·&nbsp; <a href="mailto:azizbibitov11@gmail.com">azizbibitov11@gmail.com</a> &nbsp;·&nbsp; <a href="../index.html">Portfolio</a></p>
 </footer>
-    <script>
-    var lbImgs = Array.from(document.querySelectorAll('.iphone-inner img')).map(function(i){return i.src;});
-    var lbIdx = 0;
-    function lbShow(src) {
-        lbIdx = lbImgs.indexOf(src);
-        document.getElementById('lb-img').src = src;
-        document.getElementById('lb').classList.add('active');
-    }
-    function lbHide() { document.getElementById('lb').classList.remove('active'); }
-    function lbClose(e) { if (e.target === document.getElementById('lb')) lbHide(); }
-    function lbNav(dir, e) {
-        e.stopPropagation();
-        lbIdx = (lbIdx + dir + lbImgs.length) % lbImgs.length;
-        document.getElementById('lb-img').src = lbImgs[lbIdx];
-    }
-    document.querySelectorAll('.iphone-inner img').forEach(function(img) {
-        img.addEventListener('click', function() { lbShow(this.src); });
-    });
-    document.addEventListener('keydown', function(e) {
-        var lb = document.getElementById('lb');
-        if (!lb.classList.contains('active')) return;
-        if (e.key === 'Escape') lbHide();
-        if (e.key === 'ArrowLeft') lbNav(-1, {stopPropagation:function(){}});
-        if (e.key === 'ArrowRight') lbNav(1, {stopPropagation:function(){}});
-    });
-    </script>
 
     <script>
     (function() {

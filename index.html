@@ -244,7 +244,11 @@
                         <h3 class="portfolio-sub-heading">Production Apps</h3>
                         <div class="row portfolio-container">
                             <div class="col-lg-4 col-md-6 portfolio-item web-des">
-                                <div class="portfolio-wrap">
+                                <div class="portfolio-wrap" id="first-portfolio-card">
+                                    <div class="tap-hint" id="tap-hint">
+                                        <span class="tap-hint-pulse"></span>
+                                        <span class="tap-hint-label">Tap to open</span>
+                                    </div>
                                     <figure style="--accent:#1861B4;--accent-rgb:24,97,180">
                                         <a href="projects/salam-messenger.html"><img src="img/portfolio-1.jpg" class="img-fluid" alt=""></a>
                                         <a href="img/portfolio-1.jpg" data-lightbox="portfolio" data-title="Salam Messenger" class="link-preview" title="Preview"><i class="fa fa-eye"></i></a>
@@ -526,5 +530,22 @@
         
         <!-- Template Javascript -->
         <script src="js/main.js"></script>
+        <script>
+        (function() {
+            var hint = document.getElementById('tap-hint');
+            if (!hint) return;
+            if (localStorage.getItem('portfolio-hint-seen')) {
+                hint.style.display = 'none';
+                return;
+            }
+            document.querySelectorAll('.portfolio-item a[href^="projects/"]').forEach(function(link) {
+                link.addEventListener('click', function() {
+                    hint.classList.add('hidden');
+                    setTimeout(function() { hint.style.display = 'none'; }, 400);
+                    localStorage.setItem('portfolio-hint-seen', '1');
+                }, { once: true });
+            });
+        })();
+        </script>
     </body>
 </html>

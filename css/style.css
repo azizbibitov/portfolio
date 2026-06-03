@@ -527,6 +527,50 @@ a:focus {
     margin: 0;
 }
 
+/* Tap hint */
+.tap-hint {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+}
+.tap-hint.hidden {
+    opacity: 0;
+}
+.tap-hint-pulse {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.25);
+    border: 2px solid rgba(255, 255, 255, 0.8);
+    animation: tap-pulse 1.4s ease-out infinite;
+    backdrop-filter: blur(2px);
+}
+.tap-hint-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: #fff;
+    background: rgba(0,0,0,0.45);
+    padding: 4px 10px;
+    border-radius: 20px;
+    white-space: nowrap;
+    backdrop-filter: blur(4px);
+}
+@keyframes tap-pulse {
+    0%   { transform: scale(0.8); opacity: 1; }
+    70%  { transform: scale(1.6); opacity: 0; }
+    100% { transform: scale(0.8); opacity: 0; }
+}
+
 .portfolio-sub-heading {
     font-size: 16px;
     font-weight: 700;

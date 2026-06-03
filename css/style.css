@@ -1058,7 +1058,8 @@ a:focus {
 
 /* 1 action button: center preview */
 .portfolio .portfolio-item figure.btn-one:hover .link-preview {
-    left: calc(50% - 22px);
+    left: 50%;
+    transform: translateX(-50%);
 }
 
 /* 2 action buttons: center the pair (preview left, github right) */
@@ -1068,7 +1069,7 @@ a:focus {
 .portfolio .portfolio-item figure.btn-two:hover .link-github {
     right: auto;
     transform: none;
-    left: calc(50% + 6px);
+    left: calc(50% + 3px);
 }
 
 

@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Cl:k — iOS Project by Aziz Bibitov</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --teal: #00BCD4;
+            --teal-dim: #0097A7;
+            --teal-glow: rgba(0,188,212,0.18);
+            --teal-faint: rgba(0,188,212,0.08);
+            --bg: #0a0f1a;
+            --surface: #111827;
+            --surface2: #1a2235;
+            --border: rgba(0,188,212,0.18);
+            --text: #e8edf5;
+            --muted: #7a8aa0;
+            --white: #ffffff;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        /* ── NAV ── */
+        nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 40px;
+            background: rgba(10,15,26,0.85);
+            backdrop-filter: blur(14px);
+            border-bottom: 1px solid var(--border);
+        }
+        .nav-logo {
+            font-size: 20px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            color: var(--teal);
+            text-decoration: none;
+        }
+        .nav-back {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--muted);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+        .nav-back:hover { color: var(--teal); }
+
+        /* ── HERO ── */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 120px 24px 80px;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero-glow {
+            position: absolute;
+            top: 0; left: 50%;
+            transform: translateX(-50%);
+            width: 700px; height: 400px;
+            background: radial-gradient(ellipse at center top, rgba(0,188,212,0.22) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        .hero-grid {
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(0,188,212,0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0,188,212,0.04) 1px, transparent 1px);
+            background-size: 48px 48px;
+            mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 30%, transparent 100%);
+        }
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--teal-faint);
+            border: 1px solid var(--border);
+            border-radius: 100px;
+            padding: 6px 16px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--teal);
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            margin-bottom: 28px;
+        }
+        .hero-badge .dot {
+            width: 7px; height: 7px;
+            border-radius: 50%;
+            background: var(--teal);
+            animation: pulse 2s ease-in-out infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(0.8); }
+        }
+        .hero h1 {
+            font-size: clamp(48px, 8vw, 84px);
+            font-weight: 800;
+            letter-spacing: -3px;
+            line-height: 1;
+            color: var(--white);
+            margin-bottom: 20px;
+        }
+        .hero h1 span { color: var(--teal); }
+        .hero p {
+            font-size: 18px;
+            color: var(--muted);
+            max-width: 520px;
+            margin: 0 auto 40px;
+            font-weight: 400;
+            line-height: 1.7;
+        }
+        .hero-cta {
+            display: flex;
+            gap: 14px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--teal);
+            color: #000;
+            font-weight: 700;
+            font-size: 14px;
+            padding: 14px 28px;
+            border-radius: 12px;
+            text-decoration: none;
+            transition: background 0.2s, transform 0.15s;
+        }
+        .btn-primary:hover { background: #00d6ef; transform: translateY(-2px); }
+        .btn-ghost {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: transparent;
+            color: var(--text);
+            font-weight: 600;
+            font-size: 14px;
+            padding: 14px 28px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            text-decoration: none;
+            transition: border-color 0.2s, color 0.2s, transform 0.15s;
+        }
+        .btn-ghost:hover { border-color: var(--teal); color: var(--teal); transform: translateY(-2px); }
+
+        /* ── STATS BAR ── */
+        .stats-bar {
+            display: flex;
+            justify-content: center;
+            gap: 0;
+            flex-wrap: wrap;
+            background: var(--surface);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+        .stat {
+            flex: 1;
+            min-width: 140px;
+            padding: 28px 20px;
+            text-align: center;
+            border-right: 1px solid var(--border);
+        }
+        .stat:last-child { border-right: none; }
+        .stat-num {
+            font-size: 32px;
+            font-weight: 800;
+            color: var(--teal);
+            line-height: 1;
+            margin-bottom: 6px;
+        }
+        .stat-label {
+            font-size: 12px;
+            color: var(--muted);
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* ── SECTIONS ── */
+        section { padding: 96px 24px; }
+        .container { max-width: 1100px; margin: 0 auto; }
+        .section-tag {
+            display: inline-block;
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--teal);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+        .section-title {
+            font-size: clamp(28px, 4vw, 42px);
+            font-weight: 800;
+            color: var(--white);
+            letter-spacing: -1px;
+            margin-bottom: 16px;
+        }
+        .section-sub {
+            font-size: 16px;
+            color: var(--muted);
+            max-width: 560px;
+            line-height: 1.7;
+        }
+
+        /* ── ABOUT ── */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 32px;
+            margin-top: 56px;
+        }
+        .about-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 32px;
+        }
+        .about-card h3 {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .about-card h3 .icon {
+            width: 36px; height: 36px;
+            background: var(--teal-faint);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+        }
+        .about-card p {
+            color: var(--muted);
+            font-size: 14px;
+            line-height: 1.75;
+        }
+
+        /* ── TECH STACK ── */
+        .tech-section { background: var(--surface); }
+        .tech-pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 40px;
+        }
+        .pill {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--teal-faint);
+            border: 1px solid var(--border);
+            border-radius: 100px;
+            padding: 8px 18px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--teal);
+            transition: background 0.2s, border-color 0.2s;
+        }
+        .pill:hover { background: var(--teal-glow); border-color: var(--teal); }
+
+        /* ── TASKS ── */
+        .tasks-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 56px;
+        }
+        .task-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 24px;
+            transition: border-color 0.2s, transform 0.2s;
+            position: relative;
+            overflow: hidden;
+        }
+        .task-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--teal), transparent);
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+        .task-card:hover { border-color: var(--teal); transform: translateY(-3px); }
+        .task-card:hover::before { opacity: 1; }
+        .task-num {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--teal);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+        .task-card h3 {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+        .task-card p {
+            font-size: 13px;
+            color: var(--muted);
+            line-height: 1.7;
+        }
+
+        /* ── SCREENSHOTS ── */
+        .screenshots-section { background: var(--surface); overflow: hidden; }
+        .phones-row {
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            gap: 24px;
+            margin-top: 64px;
+            flex-wrap: wrap;
+        }
+        .phone-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+        }
+        .phone-wrapper .phone-label {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* iPhone frame */
+        .iphone {
+            position: relative;
+            width: 190px;
+            border-radius: 44px;
+            background: #111;
+            box-shadow:
+                0 0 0 2px #2a2a2a,
+                0 0 0 4px #111,
+                0 0 0 6px #333,
+                0 30px 80px rgba(0,0,0,0.7),
+                0 0 40px rgba(0,188,212,0.12);
+            transition: transform 0.3s;
+        }
+        .iphone:hover { transform: translateY(-8px) scale(1.02); }
+        .iphone.featured {
+            width: 210px;
+            transform: translateY(-20px);
+            box-shadow:
+                0 0 0 2px #2a2a2a,
+                0 0 0 4px #111,
+                0 0 0 6px #333,
+                0 40px 100px rgba(0,0,0,0.8),
+                0 0 60px rgba(0,188,212,0.2);
+        }
+        .iphone.featured:hover { transform: translateY(-28px) scale(1.02); }
+
+        .iphone-inner {
+            margin: 10px;
+            border-radius: 36px;
+            overflow: hidden;
+            background: #000;
+            position: relative;
+        }
+        .iphone-inner img {
+            width: 100%;
+            display: block;
+        }
+
+        /* Dynamic island */
+        .dynamic-island {
+            position: absolute;
+            top: 12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px; height: 26px;
+            background: #000;
+            border-radius: 20px;
+            z-index: 5;
+        }
+
+        /* Buttons */
+        .iphone::before {
+            content: '';
+            position: absolute;
+            right: -3px;
+            top: 100px;
+            width: 3px; height: 60px;
+            background: #333;
+            border-radius: 0 3px 3px 0;
+        }
+        .iphone-vol-up, .iphone-vol-down, .iphone-silent {
+            position: absolute;
+            left: -3px;
+            width: 3px;
+            background: #333;
+            border-radius: 3px 0 0 3px;
+        }
+        .iphone-silent { top: 80px; height: 28px; }
+        .iphone-vol-up { top: 120px; height: 44px; }
+        .iphone-vol-down { top: 172px; height: 44px; }
+
+        /* ── BACK LINK ── */
+        .back-section {
+            padding: 64px 24px;
+            text-align: center;
+        }
+        .back-section p {
+            color: var(--muted);
+            font-size: 15px;
+            margin-bottom: 24px;
+        }
+
+        /* ── FOOTER ── */
+        footer {
+            background: var(--surface);
+            border-top: 1px solid var(--border);
+            padding: 32px 24px;
+            text-align: center;
+            color: var(--muted);
+            font-size: 13px;
+        }
+        footer a { color: var(--teal); text-decoration: none; }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 768px) {
+            nav { padding: 14px 20px; }
+            .about-grid { grid-template-columns: 1fr; }
+            .tasks-grid { grid-template-columns: 1fr; }
+            .phones-row { gap: 14px; }
+            .iphone { width: 140px; border-radius: 36px; }
+            .iphone.featured { width: 155px; transform: translateY(-12px); }
+            .iphone-inner { margin: 8px; border-radius: 29px; }
+            .dynamic-island { width: 60px; height: 20px; top: 9px; }
+            .stat { min-width: 120px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAV -->
+    <nav>
+        <span class="nav-logo">Cl:k</span>
+        <a href="../index.html#portfolio" class="nav-back">
+            <i class="fa fa-arrow-left"></i> Back to Portfolio
+        </a>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="hero-glow"></div>
+        <div class="hero-grid"></div>
+        <div class="hero-badge">
+            <span class="dot"></span>
+            Live on App Store
+        </div>
+        <h1>Cl<span>:</span>k</h1>
+        <p>A social content-sharing iOS app where users share stories with curated circles, send rich messages, and stay connected with the people who matter.</p>
+        <div class="hero-cta">
+            <a href="https://apps.apple.com/us/app/cl-k/id6748363307" target="_blank" class="btn-primary">
+                <i class="fab fa-apple"></i> View on App Store
+            </a>
+            <a href="../index.html#portfolio" class="btn-ghost">
+                <i class="fa fa-arrow-left"></i> Back to Portfolio
+            </a>
+        </div>
+    </section>
+
+    <!-- STATS -->
+    <div class="stats-bar">
+        <div class="stat">
+            <div class="stat-num">iOS</div>
+            <div class="stat-label">Platform</div>
+        </div>
+        <div class="stat">
+            <div class="stat-num">2</div>
+            <div class="stat-label">Story Tiers</div>
+        </div>
+        <div class="stat">
+            <div class="stat-num">Swift</div>
+            <div class="stat-label">Language</div>
+        </div>
+        <div class="stat">
+            <div class="stat-num">UIKit</div>
+            <div class="stat-label">UI Framework</div>
+        </div>
+    </div>
+
+    <!-- ABOUT -->
+    <section>
+        <div class="container">
+            <span class="section-tag">Overview</span>
+            <h2 class="section-title">What is Cl:k?</h2>
+            <p class="section-sub">Cl:k is a social platform built around intentional sharing — letting users choose exactly who sees their content through VIP and Circle story tiers.</p>
+
+            <div class="about-grid">
+                <div class="about-card">
+                    <h3><span class="icon">📺</span> VIP &amp; Circle Stories</h3>
+                    <p>Two distinct story tiers let users share content with different audiences. VIP stories are for close connections, Circle stories for a wider network. Each tier has its own visual identity and interaction model.</p>
+                </div>
+                <div class="about-card">
+                    <h3><span class="icon">💬</span> Rich Messaging</h3>
+                    <p>Full-featured chat with voice notes, GIF support via GIPHY, link preview cards powered by Apple's LinkPresentation framework, and real-time unread badges.</p>
+                </div>
+                <div class="about-card">
+                    <h3><span class="icon">🔔</span> Smart Notifications</h3>
+                    <p>Real-time notification bell updates via socket events. Story-related notifications automatically expire after 24 hours. Push notification deep-linking opens the correct space theme.</p>
+                </div>
+                <div class="about-card">
+                    <h3><span class="icon">🔗</span> Share Extension</h3>
+                    <p>iOS Share Extension lets users share content from any app directly into Cl:k. Implemented silent token refresh so the extension works even when the access token has expired — no need to open the main app first.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TECH STACK -->
+    <section class="tech-section">
+        <div class="container">
+            <span class="section-tag">Technology</span>
+            <h2 class="section-title">Built With</h2>
+            <p class="section-sub">A native Swift codebase using UIKit, with a range of SDKs and frameworks for media, networking, and push notifications.</p>
+
+            <div class="tech-pills">
+                <span class="pill"><i class="fab fa-swift"></i> Swift</span>
+                <span class="pill">UIKit</span>
+                <span class="pill">Alamofire</span>
+                <span class="pill">Firebase FCM</span>
+                <span class="pill">AdMob</span>
+                <span class="pill">SDWebImage</span>
+                <span class="pill">GIPHY SDK</span>
+                <span class="pill">LinkPresentation</span>
+                <span class="pill">AVFoundation</span>
+                <span class="pill">App Groups</span>
+                <span class="pill">Share Extension</span>
+                <span class="pill">NSCache</span>
+                <span class="pill">URLSession</span>
+                <span class="pill">Jira / Git</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- WORK DONE -->
+    <section>
+        <div class="container">
+            <span class="section-tag">My Contributions</span>
+            <h2 class="section-title">Work Done</h2>
+            <p class="section-sub">I worked on a wide range of tasks spanning UI, features, bug fixes, and performance improvements across the full codebase.</p>
+
+            <div class="tasks-grid">
+                <div class="task-card">
+                    <div class="task-num">Task 01</div>
+                    <h3>Circle Space UI Card Redesign</h3>
+                    <p>Redesigned Circle story cells to be fully circular with a double border ring — teal gradient for unwatched, grey when all-watched, no border when the friend has no story. Implemented screen-height-based sizing so the layout scales across all device sizes.</p>
+                </div>
+
+                <div class="task-card">
+                    <div class="task-num">Task 02</div>
+                    <h3>Message URL Link Preview</h3>
+                    <p>Built link preview cards inside message bubbles using Apple's LinkPresentation framework. Implemented a two-layer cache (NSCache + disk) so previews persist across cold launches and cell reuse never shows stale content.</p>
+                </div>
+
+                <div class="task-card">
+                    <div class="task-num">Task 03</div>
+                    <h3>GIF Support in Comments</h3>
+                    <p>Integrated the GIPHY SDK for comment GIFs. GIF cells use dynamic height from each image's aspect ratio and a static height cache so cells never jump when scrolled back into view. Handled reply mode, GIF button visibility, and multipart upload.</p>
+                </div>
+
+                <div class="task-card">
+                    <div class="task-num">Task 04</div>
+                    <h3>Share Extension Token Refresh</h3>
+                    <p>Fixed 401 errors in the Share Extension by implementing silent token refresh using shared App Group storage, with automatic retry of the failed request — no need to open the main app after token expiry.</p>
+                </div>
+
+                <div class="task-card">
+                    <div class="task-num">Task 05</div>
+                    <h3>Audio Recording in Chat</h3>
+                    <p>Built MVP voice note recording in the conversation screen with AVAudioSession management. Updated the voice note UI to visually differentiate sent and received messages. Fixed an iOS 15 audio session error with a proper activation fallback.</p>
+                </div>
+
+                <div class="task-card">
+                    <div class="task-num">Task 06</div>
+                    <h3>Conversation Header Redesign</h3>
+                    <p>Replaced the plain nav bar title with a card-style header showing the friend's profile picture and name. Added a fullscreen viewer that opens when tapping a friend's display picture, and fixed profile navigation from the header.</p>
+                </div>
+
+                <div class="task-card">
+                    <div class="task-num">Task 07</div>
+                    <h3>Story Features &amp; Bug Fixes</h3>
+                    <p>Loading timeout and retry for the story player, correct space theme from push notification deep links, story progress bar via notification, caption overlap fix, silent mode audio handling, and overlapping toast message fix on story reply.</p>
+                </div>
+
+                <div class="task-card">
+                    <div class="task-num">Task 08</div>
+                    <h3>Notification &amp; Badge System</h3>
+                    <p>Real-time notification bell via socket events, unread count badge on the Messages tab, story thumbnail on the notification screen, and automatic expiry of story notifications older than 24 hours.</p>
+                </div>
+
+                <div class="task-card">
+                    <div class="task-num">Task 09</div>
+                    <h3>Comment Enhancements</h3>
+                    <p>Comment count indicators on story previews, mention shape fix on the comment screen, GIF icon size fix, multi-line caption text field with enhanced styling, and textBio cursor overflow fix on multiline input.</p>
+                </div>
+
+                <div class="task-card">
+                    <div class="task-num">Task 10</div>
+                    <h3>Onboarding — Add &amp; Invite Friends</h3>
+                    <p>Built a new onboarding screen after profile setup prompting users to add or invite friends. Add to VIP and Add to Circle cards continue showing until the user reaches their friend limit, improving new-user discoverability.</p>
+                </div>
+
+                <div class="task-card">
+                    <div class="task-num">Task 11</div>
+                    <h3>Media Download to Gallery</h3>
+                    <p>Changed media download behaviour so files are saved directly to the iPhone Photos gallery instead of the Files app, matching standard social app expectations.</p>
+                </div>
+
+                <div class="task-card">
+                    <div class="task-num">Task 12</div>
+                    <h3>Crash Fixes &amp; Stability</h3>
+                    <p>Fixed an app crash when tapping a comment thumbnail (EXC_BAD_ACCESS from a mismatched XIB custom class), suppressed a spurious invalid access token error on the front end, and resolved multiple AutoLayout-related crashes triggered during live table layout passes.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SCREENSHOTS -->
+    <section class="screenshots-section">
+        <div class="container">
+            <span class="section-tag">App Screens</span>
+            <h2 class="section-title">In the Wild</h2>
+            <p class="section-sub">Real screenshots from the live app, showing the story feed, messaging, and profile screens.</p>
+
+            <div class="phones-row">
+                <div class="phone-wrapper">
+                    <div class="iphone">
+                        <div class="iphone-silent"></div>
+                        <div class="iphone-vol-up"></div>
+                        <div class="iphone-vol-down"></div>
+                        <div class="iphone-inner">
+                            <div class="dynamic-island"></div>
+                            <img src="../img/clik-screen-1.png" alt="Home - VIP & Circle Stories">
+                        </div>
+                    </div>
+                    <span class="phone-label">Home</span>
+                </div>
+
+                <div class="phone-wrapper">
+                    <div class="iphone">
+                        <div class="iphone-silent"></div>
+                        <div class="iphone-vol-up"></div>
+                        <div class="iphone-vol-down"></div>
+                        <div class="iphone-inner">
+                            <div class="dynamic-island"></div>
+                            <img src="../img/clik-screen-2.png" alt="Messages">
+                        </div>
+                    </div>
+                    <span class="phone-label">Messages</span>
+                </div>
+
+                <div class="phone-wrapper">
+                    <div class="iphone featured">
+                        <div class="iphone-silent"></div>
+                        <div class="iphone-vol-up"></div>
+                        <div class="iphone-vol-down"></div>
+                        <div class="iphone-inner">
+                            <div class="dynamic-island"></div>
+                            <img src="../img/clik-screen-3.png" alt="Chat">
+                        </div>
+                    </div>
+                    <span class="phone-label">Chat</span>
+                </div>
+
+                <div class="phone-wrapper">
+                    <div class="iphone">
+                        <div class="iphone-silent"></div>
+                        <div class="iphone-vol-up"></div>
+                        <div class="iphone-vol-down"></div>
+                        <div class="iphone-inner">
+                            <div class="dynamic-island"></div>
+                            <img src="../img/clik-screen-4.png" alt="My People">
+                        </div>
+                    </div>
+                    <span class="phone-label">My People</span>
+                </div>
+
+                <div class="phone-wrapper">
+                    <div class="iphone">
+                        <div class="iphone-silent"></div>
+                        <div class="iphone-vol-up"></div>
+                        <div class="iphone-vol-down"></div>
+                        <div class="iphone-inner">
+                            <div class="dynamic-island"></div>
+                            <img src="../img/clik-screen-5.png" alt="Profile">
+                        </div>
+                    </div>
+                    <span class="phone-label">Profile</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- BACK -->
+    <div class="back-section">
+        <p>Interested in working together?</p>
+        <div class="hero-cta">
+            <a href="https://apps.apple.com/us/app/cl-k/id6748363307" target="_blank" class="btn-primary">
+                <i class="fab fa-apple"></i> View on App Store
+            </a>
+            <a href="../index.html#contact" class="btn-ghost">
+                <i class="fa fa-envelope"></i> Get in Touch
+            </a>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>Aziz Bibitov — iOS Developer &nbsp;·&nbsp; <a href="mailto:azizbibitov11@gmail.com">azizbibitov11@gmail.com</a> &nbsp;·&nbsp; <a href="../index.html">Portfolio</a></p>
+    </footer>
+
+</body>
+</html>

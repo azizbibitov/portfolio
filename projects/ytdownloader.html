@@ -42,14 +42,10 @@
             display: flex; align-items: center; gap: 10px; text-decoration: none;
         }
         .nav-logo .yt-icon {
-            width: 28px; height: 20px; background: var(--red); border-radius: 5px;
+            width: 28px; height: 28px; background: transparent; border-radius: 8px;
             display: flex; align-items: center; justify-content: center;
         }
-        .nav-logo .yt-icon::after {
-            content: ''; border-style: solid;
-            border-width: 5px 0 5px 10px;
-            border-color: transparent transparent transparent #fff;
-        }
+        .nav-logo .yt-icon::after { display: none; }
         .nav-back {
             display: flex; align-items: center; gap: 8px;
             color: var(--muted); text-decoration: none;

@@ -403,6 +403,8 @@
             }
 
             function currentIndex() {
+                if (row.scrollLeft <= 2) return 0;
+                if (row.scrollLeft + row.clientWidth >= row.scrollWidth - 2) return items.length - 1;
                 var center = row.scrollLeft + row.clientWidth / 2;
                 var closest = 0, minDist = Infinity;
                 items.forEach(function(item, i) {
@@ -418,6 +420,7 @@
             }
 
             row.addEventListener('scroll', updateDots, { passive: true });
+            updateDots();
             if (prevBtn) prevBtn.addEventListener('click', function() { scrollToItem(Math.max(0, currentIndex() - 1)); });
             if (nextBtn) nextBtn.addEventListener('click', function() { scrollToItem(Math.min(items.length - 1, currentIndex() + 1)); });
         });

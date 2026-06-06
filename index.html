@@ -244,11 +244,7 @@
                         <h3 class="portfolio-sub-heading">Production Apps</h3>
                         <div class="row portfolio-container">
                             <div class="col-lg-4 col-md-6 portfolio-item web-des">
-                                <div class="portfolio-wrap" id="first-portfolio-card">
-                                    <div class="tap-hint" id="tap-hint">
-                                        <span class="tap-hint-pulse"></span>
-                                        <span class="tap-hint-label">Tap to open</span>
-                                    </div>
+                                <div class="portfolio-wrap">
                                     <figure style="--accent:#1861B4;--accent-rgb:24,97,180">
                                         <a href="projects/salam-messenger.html"><img src="img/portfolio-1.jpg" class="img-fluid" alt=""></a>
                                         <a href="img/portfolio-1.jpg" data-lightbox="portfolio" data-title="Salam Messenger" class="link-preview" title="Preview"><i class="fa fa-eye"></i></a>
@@ -403,6 +399,17 @@
                                     </figure>
                                 </div>
                             </div>
+
+                            <div class="col-lg-4 col-md-6 portfolio-item web-dev">
+                                <div class="portfolio-wrap">
+                                    <figure class="btn-two" style="--accent:#5856D6;--accent-rgb:88,86,214">
+                                        <a href="projects/marketplace.html"><img src="img/portfolio-15.png" class="img-fluid" alt=""></a>
+                                        <a href="img/portfolio-15.png" class="link-preview" data-lightbox="portfolio" data-title="Marketplace - iOS &amp; macOS Commerce App" title="Preview"><i class="fa fa-eye"></i></a>
+                                        <a href="https://github.com/azizbibitov/nodejs-express-mongodb-razorpay-marketplace" class="link-github" title="GitHub"><i class="fab fa-github"></i></a>
+                                        <a class="portfolio-title" href="projects/marketplace.html">Marketplace <span>iOS &amp; macOS</span></a>
+                                    </figure>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -530,22 +537,5 @@
         
         <!-- Template Javascript -->
         <script src="js/main.js"></script>
-        <script>
-        (function() {
-            var hint = document.getElementById('tap-hint');
-            if (!hint) return;
-            if (localStorage.getItem('portfolio-hint-seen')) {
-                hint.style.display = 'none';
-                return;
-            }
-            document.querySelectorAll('.portfolio-item a[href^="projects/"]').forEach(function(link) {
-                link.addEventListener('click', function() {
-                    hint.classList.add('hidden');
-                    setTimeout(function() { hint.style.display = 'none'; }, 400);
-                    localStorage.setItem('portfolio-hint-seen', '1');
-                }, { once: true });
-            });
-        })();
-        </script>
     </body>
 </html>

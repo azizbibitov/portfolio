@@ -423,7 +423,9 @@
 
         <!-- iOS Tab -->
         <div id="tab-ios" class="tab-panel active">
-            <div class="ios-phones-row">
+            <div class="carousel-wrapper">
+            <button class="carousel-btn prev">&#8249;</button>
+            <div class="phones-row">
                 <div class="phone-wrapper">
                     <div class="iphone">
                         <div class="iphone-silent"></div><div class="iphone-vol-up"></div><div class="iphone-vol-down"></div>
@@ -474,6 +476,9 @@
                     </div>
                 </div>
             </div>
+            <button class="carousel-btn next">&#8250;</button>
+            </div>
+            <div class="carousel-dots"></div>
         </div>
 
         <!-- macOS Tab -->
@@ -515,6 +520,51 @@
         document.getElementById('tab-' + id).classList.add('active');
         btn.classList.add('active');
     }
+    </script>
+    <script>
+    (function() {
+        document.querySelectorAll('.carousel-wrapper').forEach(function(wrapper) {
+            var row = wrapper.querySelector('.phones-row');
+            var prevBtn = wrapper.querySelector('.carousel-btn.prev');
+            var nextBtn = wrapper.querySelector('.carousel-btn.next');
+            var dotsEl = wrapper.parentElement.querySelector('.carousel-dots');
+            var items = Array.from(row.querySelectorAll('.phone-wrapper'));
+            var dots = [];
+
+            items.forEach(function(_, i) {
+                var dot = document.createElement('span');
+                dot.className = 'carousel-dot' + (i === 0 ? ' active' : '');
+                dot.addEventListener('click', function() { scrollToItem(i); });
+                dotsEl.appendChild(dot);
+                dots.push(dot);
+            });
+
+            function scrollToItem(i) {
+                var item = items[i];
+                var target = item.offsetLeft - (row.clientWidth - item.offsetWidth) / 2;
+                row.scrollTo({ left: target, behavior: 'smooth' });
+            }
+
+            function currentIndex() {
+                var center = row.scrollLeft + row.clientWidth / 2;
+                var closest = 0, minDist = Infinity;
+                items.forEach(function(item, i) {
+                    var d = Math.abs((item.offsetLeft + item.offsetWidth / 2) - center);
+                    if (d < minDist) { minDist = d; closest = i; }
+                });
+                return closest;
+            }
+
+            function updateDots() {
+                var idx = currentIndex();
+                dots.forEach(function(d, i) { d.classList.toggle('active', i === idx); });
+            }
+
+            row.addEventListener('scroll', updateDots, { passive: true });
+            if (prevBtn) prevBtn.addEventListener('click', function() { scrollToItem(Math.max(0, currentIndex() - 1)); });
+            if (nextBtn) nextBtn.addEventListener('click', function() { scrollToItem(Math.min(items.length - 1, currentIndex() + 1)); });
+        });
+    })();
     </script>
 </body>
 </html>

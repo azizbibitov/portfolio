@@ -1,3 +1,6 @@
 .DS_Store
 **/.DS_Store
 .claude/
+
+# backup written by tools/resume/build.sh
+documents/*.pdf.bak

@@ -642,19 +642,29 @@
                 dots.push(dot);
             });
 
+            // One phone plus the gap. Buttons move by this step instead of centering an
+            // item index: the first two phones can share the same snap position, which
+            // left an index-based "next" stuck on the second phone.
+            function step() {
+                if (items.length < 2) return 0;
+                return items[1].getBoundingClientRect().left - items[0].getBoundingClientRect().left;
+            }
+
+            // Positions come from getBoundingClientRect: offsetLeft is measured from <body>,
+            // not from the scrolling row, so it cannot be compared with scrollLeft.
             function scrollToItem(i) {
-                var item = items[i];
-                var target = item.offsetLeft - (row.clientWidth - item.offsetWidth) / 2;
-                row.scrollTo({ left: target, behavior: 'smooth' });
+                var box = row.getBoundingClientRect(), r = items[i].getBoundingClientRect();
+                row.scrollBy({ left: (r.left + r.width / 2) - (box.left + box.width / 2), behavior: 'smooth' });
             }
 
             function currentIndex() {
                 if (row.scrollLeft <= 2) return 0;
                 if (row.scrollLeft + row.clientWidth >= row.scrollWidth - 2) return items.length - 1;
-                var center = row.scrollLeft + row.clientWidth / 2;
+                var box = row.getBoundingClientRect(), center = box.left + box.width / 2;
                 var closest = 0, minDist = Infinity;
                 items.forEach(function(item, i) {
-                    var d = Math.abs((item.offsetLeft + item.offsetWidth / 2) - center);
+                    var r = item.getBoundingClientRect();
+                    var d = Math.abs(r.left + r.width / 2 - center);
                     if (d < minDist) { minDist = d; closest = i; }
                 });
                 return closest;
@@ -667,8 +677,8 @@
 
             row.addEventListener('scroll', updateDots, { passive: true });
             updateDots();
-            if (prevBtn) prevBtn.addEventListener('click', function() { scrollToItem(Math.max(0, currentIndex() - 1)); });
-            if (nextBtn) nextBtn.addEventListener('click', function() { scrollToItem(Math.min(items.length - 1, currentIndex() + 1)); });
+            if (prevBtn) prevBtn.addEventListener('click', function() { row.scrollBy({ left: -step(), behavior: 'smooth' }); });
+            if (nextBtn) nextBtn.addEventListener('click', function() { row.scrollBy({ left: step(), behavior: 'smooth' }); });
         });
     })();
     </script>

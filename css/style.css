@@ -383,7 +383,7 @@ a:focus {
 
 .header .content-inner {
     padding: 100px 30px;
-    background: url(../img/profile.png) right bottom no-repeat;
+    background: url(../img/profile.webp) right bottom no-repeat;
     background-size: contain;
 }
 
@@ -463,6 +463,28 @@ a:focus {
     font-size: 25px;
     font-weight: 300;
     color: #222222;
+}
+
+/* Narrow screens: the photo would cover the name, so it moves below the text */
+@media (max-width: 767.98px) {
+    .header .content-inner {
+        padding: 50px 20px 0;
+        background: none;
+    }
+
+    .header .content-inner::after {
+        content: '';
+        display: block;
+        height: 320px;
+        margin-top: 20px;
+        background: url(../img/profile.webp) center bottom no-repeat;
+        background-size: contain;
+    }
+
+    .header h2 {
+        height: auto;
+        min-height: 60px;
+    }
 }
 
 .large-btn .content-inner {

@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Ýedigen — Video &amp; Music Streaming iOS App by Aziz Bibitov</title>
+    <link href="../img/favicon.png" rel="icon" type="image/png">
+    <link href="../img/apple-touch-icon.png" rel="apple-touch-icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --accent: #E50914;
+            --accent-bright: #FF4D57;
+            --accent-dim: #B20710;
+            --accent-glow: rgba(229,9,20,0.18);
+            --accent-faint: rgba(229,9,20,0.08);
+            --accent-rgb: 229,9,20;
+            --bg: #0b0707;
+            --surface: #140d0d;
+            --surface2: #1e1414;
+            --border: rgba(229,9,20,0.22);
+            --border-neutral: rgba(255,255,255,0.07);
+            --text: #f6eeee;
+            --muted: #a08a8a;
+            --white: #ffffff;
+        }
+
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+
+        /* ── NAV ── */
+        nav {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 16px 40px;
+            background: rgba(11,7,7,0.88);
+            backdrop-filter: blur(14px);
+            border-bottom: 1px solid var(--border-neutral);
+        }
+        .nav-logo {
+            font-size: 15px; font-weight: 700; color: var(--white);
+            display: flex; align-items: center; gap: 10px; text-decoration: none;
+        }
+        .nav-logo .m-icon {
+            width: 28px; height: 28px; background: var(--accent); border-radius: 8px;
+            display: flex; align-items: center; justify-content: center; overflow: hidden;
+        }
+        .nav-back {
+            display: flex; align-items: center; gap: 8px;
+            color: var(--muted); text-decoration: none;
+            font-size: 14px; font-weight: 500; transition: color 0.2s;
+        }
+        .nav-back:hover { color: var(--accent-bright); }
+
+        /* ── HERO ── */
+        .hero {
+            min-height: 100vh; display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            text-align: center; padding: 120px 24px 80px;
+            position: relative; overflow: hidden;
+        }
+        .hero-bg {
+            position: absolute; inset: 0; pointer-events: none;
+            background: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(229,9,20,0.18) 0%, transparent 70%);
+        }
+        .hero-grid {
+            position: absolute; inset: 0; pointer-events: none;
+            background-image:
+                linear-gradient(rgba(229,9,20,0.06) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(229,9,20,0.06) 1px, transparent 1px);
+            background-size: 48px 48px;
+            mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 30%, transparent 100%);
+        }
+        .hero-badge {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: var(--accent-faint); border: 1px solid var(--border);
+            border-radius: 100px; padding: 6px 16px;
+            font-size: 12px; font-weight: 700; color: var(--accent-bright);
+            letter-spacing: 0.5px; text-transform: uppercase; margin-bottom: 28px;
+        }
+        .hero-badge .dot {
+            width: 7px; height: 7px; border-radius: 50%; background: var(--accent-bright);
+            animation: pulse 2s ease-in-out infinite;
+        }
+        @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(0.8)} }
+
+        .hero h1 {
+            font-size: clamp(42px, 7vw, 80px); font-weight: 800;
+            letter-spacing: -3px; line-height: 1; color: var(--white); margin-bottom: 20px;
+        }
+        .hero h1 span { color: var(--accent-bright); }
+        .hero p { font-size: 18px; color: var(--muted); max-width: 560px; margin: 0 auto 40px; line-height: 1.7; }
+
+        .hero-cta { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+        .btn-primary {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: var(--accent); color: #fff; font-weight: 600; font-size: 14px;
+            padding: 14px 28px; border-radius: 12px; text-decoration: none;
+            border: 1px solid var(--accent);
+            transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+            box-shadow: 0 8px 30px rgba(229,9,20,0.35);
+        }
+        .btn-primary:hover { background: var(--accent-bright); transform: translateY(-2px); }
+        .btn-ghost {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: transparent; color: var(--text); font-weight: 600; font-size: 14px;
+            padding: 14px 28px; border-radius: 12px;
+            border: 1px solid var(--border-neutral); text-decoration: none;
+            transition: border-color 0.2s, color 0.2s, transform 0.15s;
+        }
+        .btn-ghost:hover { border-color: var(--accent); color: var(--accent-bright); transform: translateY(-2px); }
+
+        /* ── STATS ── */
+        .stats-bar {
+            display: flex; justify-content: center; flex-wrap: wrap;
+            background: var(--surface);
+            border-top: 1px solid var(--border-neutral);
+            border-bottom: 1px solid var(--border-neutral);
+        }
+        .stat { flex: 1; min-width: 140px; padding: 28px 20px; text-align: center; border-right: 1px solid var(--border-neutral); }
+        .stat:last-child { border-right: none; }
+        .stat-num { font-size: 28px; font-weight: 800; color: var(--accent-bright); line-height: 1; margin-bottom: 6px; }
+        .stat-label { font-size: 12px; color: var(--muted); font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; }
+
+        /* ── SECTIONS ── */
+        section { padding: 96px 24px; }
+        .container { max-width: 1100px; margin: 0 auto; }
+        .section-tag { display: inline-block; font-size: 11px; font-weight: 700; color: var(--accent-bright); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 12px; }
+        .section-title { font-size: clamp(26px, 4vw, 40px); font-weight: 800; color: var(--white); letter-spacing: -1px; margin-bottom: 16px; }
+        .section-sub { font-size: 16px; color: var(--muted); max-width: 560px; line-height: 1.7; }
+
+        /* ── FEATURES ── */
+        .features-grid {
+            display: grid; grid-template-columns: repeat(3, 1fr);
+            gap: 20px; margin-top: 56px;
+        }
+        .feature-card {
+            background: var(--surface); border: 1px solid var(--border-neutral);
+            border-radius: 16px; padding: 28px;
+            transition: border-color 0.2s, transform 0.2s;
+            position: relative; overflow: hidden;
+        }
+        .feature-card::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+            background: linear-gradient(90deg, var(--accent), transparent); opacity: 0; transition: opacity 0.2s;
+        }
+        .feature-card:hover { border-color: var(--border); transform: translateY(-3px); }
+        .feature-card:hover::before { opacity: 1; }
+        .feature-icon {
+            width: 44px; height: 44px; background: var(--accent-faint); border: 1px solid var(--border);
+            border-radius: 12px; display: flex; align-items: center; justify-content: center;
+            font-size: 20px; margin-bottom: 16px;
+        }
+        .feature-card h3 { font-size: 15px; font-weight: 700; color: var(--white); margin-bottom: 10px; }
+        .feature-card p { font-size: 13px; color: var(--muted); line-height: 1.7; }
+
+        /* ── TECH STACK ── */
+        .tech-section { background: var(--surface); }
+        .tech-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 56px; }
+        .tech-col h3 { font-size: 13px; font-weight: 700; color: var(--accent-bright); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 16px; }
+        .tech-pills { display: flex; flex-wrap: wrap; gap: 8px; }
+        .pill {
+            display: flex; align-items: center; gap: 6px;
+            background: var(--accent-faint); border: 1px solid var(--border);
+            border-radius: 100px; padding: 7px 16px;
+            font-size: 13px; font-weight: 600; color: var(--accent-bright);
+            transition: background 0.2s;
+        }
+        .pill:hover { background: var(--accent-glow); }
+        .pill-neutral {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--border-neutral);
+            color: var(--text);
+        }
+        .pill-neutral:hover { background: rgba(255,255,255,0.09); }
+
+        /* ── SCREENSHOTS ── */
+        .screenshots-section { background: var(--bg); overflow: hidden; }
+        .carousel-wrapper { display: flex; align-items: center; gap: 10px; }
+        .phones-row {
+            display: flex; align-items: center;
+            gap: 20px; margin-top: 40px; flex: 1; min-width: 0;
+            overflow-x: auto; -webkit-overflow-scrolling: touch;
+            scroll-snap-type: x mandatory;
+            padding: 40px 24px 48px;
+            scrollbar-width: none;
+        }
+        .phones-row::-webkit-scrollbar { display: none; }
+        .phone-wrapper { scroll-snap-align: center; flex-shrink: 0; display: flex; flex-direction: column; align-items: center; }
+        .carousel-btn {
+            flex-shrink: 0; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.14);
+            color: #fff; width: 44px; height: 44px; border-radius: 50%; cursor: pointer;
+            font-size: 26px; display: flex; align-items: center; justify-content: center;
+            transition: background 0.2s; backdrop-filter: blur(8px); line-height: 1; padding: 0;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.06);
+            z-index: 2;
+        }
+        .carousel-btn:hover { background: rgba(255,255,255,0.18); }
+        /* Too many screens for dots, so the carousel shows a position counter */
+        .carousel-counter { text-align: center; padding-bottom: 40px; color: var(--muted); font-size: 13px; font-weight: 600; font-variant-numeric: tabular-nums; }
+        .carousel-counter b { color: var(--accent-bright); }
+
+        /* iPhone 11 frame */
+        .iphone {
+            position: relative; width: 220px; border-radius: 26px; background: #1c1c1c;
+            box-shadow:
+                inset 0 0 0 1px #3a3a3a,
+                0 0 0 1px #111,
+                0 30px 70px rgba(0,0,0,0.85), 0 0 40px rgba(var(--accent-rgb),0.12);
+            transition: transform 0.3s;
+        }
+        .iphone:hover { transform: translateY(-8px) scale(1.02); }
+        .iphone-inner {
+            margin: 14px; border-radius: 15px; overflow: hidden;
+            background: #000; position: relative; aspect-ratio: 828 / 1792;
+        }
+        .iphone-inner img { width: 100%; height: 100%; display: block; }
+        .iphone::before {
+            content: ''; position: absolute; right: -3px; top: 26%;
+            width: 3px; height: 14%; background: #333; border-radius: 0 2px 2px 0;
+        }
+        .iphone-silent { position: absolute; left: -3px; top: 18%; width: 3px; height: 6%; background: #333; border-radius: 2px 0 0 2px; }
+        .iphone-vol-up  { position: absolute; left: -3px; top: 28%; width: 3px; height: 9%; background: #333; border-radius: 2px 0 0 2px; }
+        .iphone-vol-down{ position: absolute; left: -3px; top: 40%; width: 3px; height: 9%; background: #333; border-radius: 2px 0 0 2px; }
+        .iphone-home-bar {
+            position: absolute; bottom: 6px; left: 50%; transform: translateX(-50%);
+            width: 36%; height: 4px; background: #444; border-radius: 2px;
+        }
+
+        /* BACK / FOOTER */
+        .back-section { padding: 64px 24px; text-align: center; }
+        .back-section p { color: var(--muted); font-size: 15px; margin-bottom: 24px; }
+        footer { background: var(--surface); border-top: 1px solid var(--border-neutral); padding: 32px 24px; text-align: center; color: var(--muted); font-size: 13px; }
+        footer a { color: var(--accent-bright); text-decoration: none; }
+
+        @media (max-width: 900px) {
+            .features-grid { grid-template-columns: 1fr 1fr; }
+            .tech-cols { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 768px) {
+            nav { padding: 14px 20px; }
+            .features-grid { grid-template-columns: 1fr; }
+            .stat { min-width: 50%; border-bottom: 1px solid var(--border-neutral); }
+            .iphone { width: 180px; border-radius: 22px; }
+            .iphone-inner { margin: 11px; border-radius: 12px; }
+            .phones-row { padding: 24px 20px 36px; gap: 14px; }
+            .carousel-btn { display: none; }
+            .carousel-wrapper { gap: 0; }
+        }
+        @media (max-width: 400px) {
+            .iphone { width: 155px; border-radius: 19px; }
+            .iphone-inner { margin: 10px; border-radius: 11px; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+    <a href="../index.html#portfolio" class="nav-logo">
+        <span class="m-icon"><img src="../img/yedigen-icon.png" alt="" style="width:100%;height:100%;object-fit:cover;display:block;"></span>
+        Ýedigen
+    </a>
+    <a href="../index.html#portfolio" class="nav-back">
+        <i class="fa fa-arrow-left"></i> Back to Portfolio
+    </a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-grid"></div>
+    <div class="hero-badge"><span class="dot"></span> iOS App</div>
+    <h1><span>Ýedigen</span></h1>
+    <p>A video and music streaming app for iOS and Apple TV: films, series, live TV channels and a full music player, with offline downloads, family profiles, subscriptions paid from an in-app balance, and a phone that can drive playback on the TV.</p>
+    <div class="hero-cta">
+        <a href="../index.html#portfolio" class="btn-ghost">
+            <i class="fa fa-arrow-left"></i> Back to Portfolio
+        </a>
+    </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-bar">
+    <div class="stat"><div class="stat-num">iOS &amp; tvOS</div><div class="stat-label">Platforms</div></div>
+    <div class="stat"><div class="stat-num">SwiftUI</div><div class="stat-label">Framework</div></div>
+    <div class="stat"><div class="stat-num">MVVM</div><div class="stat-label">+ Combine</div></div>
+    <div class="stat"><div class="stat-num">3</div><div class="stat-label">Languages</div></div>
+</div>
+
+<!-- FEATURES -->
+<section>
+    <div class="container">
+        <span class="section-tag">Features</span>
+        <h2 class="section-title">What it does</h2>
+        <p class="section-sub">One account covers films, series, TV channels and music, on the phone and on Apple TV, with up to five signed-in devices.</p>
+
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">🎬</div>
+                <h3>Films, Series &amp; Live TV</h3>
+                <p>A catalog of films, series, cartoons, anime, documentaries, karaoke, news and education with genre and year filters, plus live TV channels grouped by category with bookmarks.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">▶️</div>
+                <h3>Video Player</h3>
+                <p>AVPlayer for films and series, MobileVLCKit for live TV channels whose MP2 audio AVFoundation can't decode, plus VAST ads, picture-in-picture and AirPlay.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🎵</div>
+                <h3>Music Streaming</h3>
+                <p>Playlists, artists and albums, a full-screen player with a queue, saved music, and a "can't find it?" request that sends a suggestion to the content team.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">⬇️</div>
+                <h3>Offline Downloads</h3>
+                <p>Films and episodes download through AVAssetDownloadTask and are tracked in CoreData, with the storage they take shown in the library.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📺</div>
+                <h3>Phone ↔ TV</h3>
+                <p>Sign a TV in by entering its device code, manage the signed-in devices, and use the phone as a companion: search on the phone and start playback on the TV over a WebSocket.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">👪</div>
+                <h3>Profiles &amp; Billing</h3>
+                <p>Several profiles per account, including child profiles, an account balance with top-ups, auto-renewing subscriptions, transaction history and push notifications.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- TECH STACK -->
+<section class="tech-section">
+    <div class="container">
+        <span class="section-tag">Technology</span>
+        <h2 class="section-title">Tech Stack</h2>
+        <p class="section-sub">SwiftUI with MVVM and Combine, a Moya networking layer, Factory for dependency injection, and a shared codebase for the iOS and tvOS apps.</p>
+
+        <div class="tech-cols">
+            <div class="tech-col">
+                <h3>iOS &amp; tvOS App</h3>
+                <div class="tech-pills">
+                    <span class="pill">SwiftUI</span>
+                    <span class="pill">Combine</span>
+                    <span class="pill">AVKit</span>
+                    <span class="pill">MobileVLCKit</span>
+                    <span class="pill">Moya</span>
+                    <span class="pill">Factory (DI)</span>
+                    <span class="pill">CoreData</span>
+                    <span class="pill">KeychainAccess</span>
+                    <span class="pill">Kingfisher</span>
+                    <span class="pill">Firebase</span>
+                    <span class="pill pill-neutral">iOS 17+</span>
+                    <span class="pill pill-neutral">tvOS 17+</span>
+                    <span class="pill pill-neutral">Notification Service Extension</span>
+                </div>
+            </div>
+            <div class="tech-col">
+                <h3>Key Patterns</h3>
+                <div class="tech-pills">
+                    <span class="pill">MVVM + Combine</span>
+                    <span class="pill">Dependency Injection</span>
+                    <span class="pill">VAST Ads</span>
+                    <span class="pill">WebSocket Companion</span>
+                    <span class="pill pill-neutral">Paginated Lists</span>
+                    <span class="pill pill-neutral">Deep Links</span>
+                    <span class="pill pill-neutral">Runtime Language Switching</span>
+                    <span class="pill pill-neutral">TK / RU / EN</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- SCREENSHOTS -->
+<section class="screenshots-section">
+    <div class="container">
+        <span class="section-tag">App Screens</span>
+        <h2 class="section-title">Screenshots</h2>
+        <p class="section-sub">52 screens from the app running on iPhone.</p>
+
+        <div class="carousel-wrapper">
+        <button class="carousel-btn prev" aria-label="Previous screen">&#8249;</button>
+        <div class="phones-row">
+            <div class="phone-wrapper">
+                <div class="iphone">
+                    <div class="iphone-silent"></div><div class="iphone-vol-up"></div><div class="iphone-vol-down"></div>
+                    <div class="iphone-inner"><img src="../img/yedigen-1.webp" loading="lazy" alt="Ýedigen screen 1"></div>
+                    <div class="iphone-home-bar"></div>
+                </div>
+            </div>
+            <div class="phone-wrapper">
+                <div class="iphone">
+                    <div class="iphone-silent"></div><div class="iphone-vol-up"></div><div class="iphone-vol-down"></div>
+                    <div class="iphone-inner"><img src="../img/yedigen-2.webp" loading="lazy" alt="Ýedigen screen 2"></div>
+                    <div class="iphone-home-bar"></div>
+                </div>
+            </div>
+            <div class="phone-wrapper">
+                <div class="iphone">
+                    <div class="iphone-silent"></div><div class="iphone-vol-up"></div><div class="iphone-vol-down"></div>
+                    <div class="iphone-inner"><img src="../img/yedigen-3.webp" loading="lazy" alt="Ýedigen screen 3"></div>
+                    <div class="iphone-home-bar"></div>
+                </div>
+            </div>
+            <div class="phone-wrapper">
+                <div class="iphone">
+                    <div class="iphone-silent"></div><div class="iphone-vol-up"></div><div class="iphone-vol-down"></div>
+                    <div class="iphone-inner"><img src="../img/yedigen-4.webp" loading="lazy" alt="Ýedigen screen 4"></div>
+                    <div class="iphone-home-bar"></div>
+                </div>
+            </div>
+            <div class="phone-wrapper">
+                <div class="iphone">
+                    <div class="iphone-silent"></div><div class="iphone-vol-up"></div><div class="iphone-vol-down"></div>
+                    <div class="iphone-inner"><img src="../img/yedigen-5.webp" loading="lazy" alt="Ýedigen screen 5"></div>
+                    <div class="iphone-home-bar"></div>
+                </div>
+            </div>
+            <div class="phone-wrapper">
+                <div class="iphone">
+                    <div class="iphone-silent"></div><div class="iphone-vol-up"></div><div class="iphone-vol-down"></div>
+                    <div class="iphone-inner"><img src="../img/yedigen-6.webp" loading="lazy" alt="Ýedigen screen 6"></div>
+                    <div class="iphone-home-bar"></div>
+                </div>
+            </div>
+            <div class="phone-wrapper">
+                <div class="iphone">
+                    <div class="iphone-silent"></div><div class="iphone-vol-up"></div><div class="iphone-vol-down"></div>
+                    <div class="iphone-inner"><img src="../img/yedigen-7.webp" loading="lazy" alt="Ýedigen screen 7"></div>
+                    <div class="iphone-home-bar"></div>
+                </div>
+            </div>
+            <div class="phone-wrapper">
+                <div class="iphone">
+                    <div class="iphone-silent"></div><div class="iphone-vol-up"></div><div class="iphone-vol-down"></div>
+                    <div class="iphone-inner"><img src="../img/yedigen-8.webp" loading="lazy" alt="Ýedigen screen 8"></div>
+                    <div class="iphone-home-bar"></div>
+                </div>
+            </div>
+            <div class="phone-wrapper">
+                <div class="iphone">
+                    <div class="iphone-silent"></div><div class="iphone-vol-up"></div><div class="iphone-vol-down"></div>
+                    <div class="iphone-inner"><img src="../img/yedigen-9.webp" loading="lazy" alt="Ýedigen screen 9"></div>
+                    <div class="iphone-home-bar"></div>
+                </div>
+            </div>
+            <div class="phone-wrapper">
+                <div class="iphone">
+                    <div class="iphone-silent"></div><div class="iphone-vol-up"></div><div class="iphone-vol-down"></div>
+                    <div class="iphone-inner"><img src="../img/yedigen-10.webp" loading="lazy" alt="Ýedigen screen 10"></div>
+                    <div class="iphone-home-bar"></div>
+                </div>
+            </div>
+            <div class="phone-wrapper">
+                <div class="iphone">
+                    <div class="iphone-silent"></div><div class="iphone-vol-up"></div><div class="iphone-vol-down"></div>
+                    <div class="iphone-inner"><img src="../img/yedigen-11.webp" loading="lazy" alt="Ýedigen screen 11"></div>
+                    <div class="iphone-home-bar"></div>
+                </div>
+            </div>
+            <div class="phone-wrapper">
+                <div class="iphone">
+                    <div class="iphone-silent"></div><div class="iphone-vol-up"></div><div class="iphone-vol-down"></div>
+                    <div class="iphone-inner"><img src="../img/yedigen-12.webp" loading="lazy" alt="Ýedigen screen 12"></div>
+                    <div class="iphone-home-bar"></div>
+                </div>
+            </div>
+            <div class="phone-wrapper">
+                <div class="iphone">
+                    <div class="iphone-silent"></div><div class="iphone-vol-up"></div><div class="iphone-vol-down"></div>
+                    <div class="iphone-inner"><img src="../img/yedigen-13.webp" loading="lazy" alt="Ýedigen screen 13"></div>
+                    <div class="iphone-home-bar"></div>
+                </div>
+            </div>
+            <div class="phone-wrapper">
+                <div class="iphone">
+                    <div class="iphone-silent"></div><div class="iphone-vol-up"></div><div class="iphone-vol-down"></div>
+                    <div class="iphone-inner"><img src="../img/yedigen-14.webp" loading="lazy" alt="Ýedigen screen 14"></div>
+                    <div class="iphone-home-bar"></div>
+                </div>
+            </div>
+            <div class="phone-wrapper">
+                <div class="iphone">
+                    <div class="iphone-silent"></div><div class="iphone-vol-up"></div><div class="iphone-vol-down"></div>
+                    <div class="iphone-inner"><img src="../img/yedigen-15.webp" loading="lazy" alt="Ýedigen screen 15"></div>
+                    <div class="iphone-home-bar"></div>
+                </div>
+            </div>
+            <div class="phone-wrapper">
+                <div class="iphone">
+                    <div class="iphone-silent"></div><div class="iphone-vol-up"></div><div class="iphone-vol-down"></div>
+                    <div class="iphone-inner"><img src="../img/yedigen-16.webp" loading="lazy" alt="Ýedigen screen 16"></div>
+                    <div class="iphone-home-bar"></div>
+                </div>
+            </div>
+            <div class="phone-wrapper">
+                <div class="iphone">
+                    <div class="iphone-silent"></div><div class="iphone-vol-up"></div><div class="iphone-vol-down"></div>
+                    <div class="iphone-inner"><img src="../img/yedigen-17.webp" loading="lazy" alt="Ýedigen screen 17"></div>
+                    <div class="iphone-home-bar"></div>
+                </div>
+            </div>
+            <div class="phone-wrapper">
+                <div class="iphone">
+                    <div class="iphone-silent"></div><div class="iphone-vol-up"></div><div class="iphone-vol-down"></div>
+                    <div class="iphone-inner"><img src="../img/yedigen-18.webp" loading="lazy" alt="Ýedigen screen 18"></div>
+                    <div class="iphone-home-bar"></div>
+                </div>
+            </div>
+            <div class="phone-wrapper">
+                <div class="iphone">
+                    <div class="iphone-silent"></div><div class="iphone-vol-up"></div><div class="iphone-vol-down"></div>
+                    <div class="iphone-inner"><img src="../img/yedigen-19.webp" loading="lazy" alt="Ýedigen screen 19"></div>
+                    <div class="iphone-home-bar"></div>
+                </div>
+            </div>
+            <div class="phone-wrapper">
+                <div class="iphone">
+                    <div class="iphone-silent"></div><div class="iphone-vol-up"></div><div class="iphone-vol-down"></div>
+                    <div class="iphone-inner"><img src="../img/yedigen-20.webp" loading="lazy" alt="Ýedigen screen 20"></div>
+                    <div class="iphone-home-bar"></div>
+                </div>
+            </div>
+            <div class="phone-wrapper">
+                <div class="iphone">
+                    <div class="iphone-silent"></div><div class="iphone-vol-up"></div><div class="iphone-vol-down"></div>
+                    <div class="iphone-inner"><img src="../img/yedigen-21.webp" loading="lazy" alt="Ýedigen screen 21"></div>
+                    <div class="iphone-home-bar"></div>
+                </div>
+            </div>
+            <div class="phone-wrapper">
+                <div class="iphone">
+                    <div class="iphone-silent"></div><div class="iphone-vol-up"></div><div class="iphone-vol-down"></div>
+                    <div class="iphone-inner"><img src="../img/yedigen-22.webp" loading="lazy" alt="Ýedigen screen 22"></div>
+                    <div class="iphone-home-bar"></div>
+                </div>
+            </div>
+            <div class="phone-wrapper">
+                <div class="iphone">
+                    <div class="iphone-silent"></div><div class="iphone-vol-up"></div><div class="iphone-vol-down"></div>
+                    <div class="iphone-inner"><img src="../img/yedigen-23.webp" loading="lazy" alt="Ýedigen screen 23"></div>
+                    <div class="iphone-home-bar"></div>
+                </div>
+            </div>
+            <div class="phone-wrapper">
+                <div class="iphone">
+                    <div class="iphone-silent"></div><div class="iphone-vol-up"></div><div class="iphone-vol-down"></div>
+                    <div class="iphone-inner"><img src="../img/yedigen-24.webp" loading="lazy" alt="Ýedigen screen 24"></div>
+                    <div class="iphone-home-bar"></div>
+                </div>
+            </div>
+            <div class="phone-wrapper">
+                <div class="iphone">
+                    <div class="iphone-silent"></div><div class="iphone-vol-up"></div><div class="iphone-vol-down"></div>
+                    <div class="iphone-inner"><img src="../img/yedigen-25.webp" loading="lazy" alt="Ýedigen screen 25"></div>
+                    <div class="iphone-home-bar"></div>
+                </div>
+            </div>
+            <div class="phone-wrapper">
+                <div class="iphone">
+                    <div class="iphone-silent"></div><div class="iphone-vol-up"></div><div class="iphone-vol-down"></div>
+                    <div class="iphone-inner"><img src="../img/yedigen-26.webp" loading="lazy" alt="Ýedigen screen 26"></div>
+                    <div class="iphone-home-bar"></div>
+                </div>
+            </div>
+            <div class="phone-wrapper">
+                <div class="iphone">
+                    <div class="iphone-silent"></div><div class="iphone-vol-up"></div><div class="iphone-vol-down"></div>
+                    <div class="iphone-inner"><img src="../img/yedigen-27.webp" loading="lazy" alt="Ýedigen screen 27"></div>
+                    <div class="iphone-home-bar"></div>
+                </div>
+            </div>
+            <div class="phone-wrapper">
+                <div class="iphone">
+                    <div class="iphone-silent"></div><div class="iphone-vol-up"></div><div class="iphone-vol-down"></div>
+                    <div class="iphone-inner"><img src="../img/yedigen-28.webp" loading="lazy" alt="Ýedigen screen 28"></div>
+                    <div class="iphone-home-bar"></div>
+                </div>
+            </div>
+            <div class="phone-wrapper">
+                <div class="iphone">
+                    <div class="iphone-silent"></div><div class="iphone-vol-up"></div><div class="iphone-vol-down"></div>
+                    <div class="iphone-inner"><img src="../img/yedigen-29.webp" loading="lazy" alt="Ýedigen screen 29"></div>
+                    <div class="iphone-home-bar"></div>
+                </div>
+            </div>
+            <div class="phone-wrapper">
+                <div class="iphone">
+                    <div class="iphone-silent"></div><div class="iphone-vol-up"></div><div class="iphone-vol-down"></div>
+                    <div class="iphone-inner"><img src="../img/yedigen-30.webp" loading="lazy" alt="Ýedigen screen 30"></div>
+                    <div class="iphone-home-bar"></div>
+                </div>
+            </div>
+            <div class="phone-wrapper">
+                <div class="iphone">
+                    <div class="iphone-silent"></div><div class="iphone-vol-up"></div><div class="iphone-vol-down"></div>
+                    <div class="iphone-inner"><img src="../img/yedigen-31.webp" loading="lazy" alt="Ýedigen screen 31"></div>
+                    <div class="iphone-home-bar"></div>
+                </div>
+            </div>
+            <div class="phone-wrapper">
+                <div class="iphone">
+                    <div class="iphone-silent"></div><div class="iphone-vol-up"></div><div class="iphone-vol-down"></div>
+                    <div class="iphone-inner"><img src="../img/yedigen-32.webp" loading="lazy" alt="Ýedigen screen 32"></div>
+                    <div class="iphone-home-bar"></div>
+                </div>
+            </div>
+            <div class="phone-wrapper">
+                <div class="iphone">
+                    <div class="iphone-silent"></div><div class="iphone-vol-up"></div><div class="iphone-vol-down"></div>
+                    <div class="iphone-inner"><img src="../img/yedigen-33.webp" loading="lazy" alt="Ýedigen screen 33"></div>
+                    <div class="iphone-home-bar"></div>
+                </div>
+            </div>
+            <div class="phone-wrapper">
+                <div class="iphone">
+                    <div class="iphone-silent"></div><div class="iphone-vol-up"></div><div class="iphone-vol-down"></div>
+                    <div class="iphone-inner"><img src="../img/yedigen-34.webp" loading="lazy" alt="Ýedigen screen 34"></div>
+                    <div class="iphone-home-bar"></div>
+                </div>
+            </div>
+            <div class="phone-wrapper">
+                <div class="iphone">
+                    <div class="iphone-silent"></div><div class="iphone-vol-up"></div><div class="iphone-vol-down"></div>
+                    <div class="iphone-inner"><img src="../img/yedigen-35.webp" loading="lazy" alt="Ýedigen screen 35"></div>
+                    <div class="iphone-home-bar"></div>
+                </div>
+            </div>
+            <div class="phone-wrapper">
+                <div class="iphone">
+                    <div class="iphone-silent"></div><div class="iphone-vol-up"></div><div class="iphone-vol-down"></div>
+                    <div class="iphone-inner"><img src="../img/yedigen-36.webp" loading="lazy" alt="Ýedigen screen 36"></div>
+                    <div class="iphone-home-bar"></div>
+                </div>
+            </div>
+            <div class="phone-wrapper">
+                <div class="iphone">
+                    <div class="iphone-silent"></div><div class="iphone-vol-up"></div><div class="iphone-vol-down"></div>
+                    <div class="iphone-inner"><img src="../img/yedigen-37.webp" loading="lazy" alt="Ýedigen screen 37"></div>
+                    <div class="iphone-home-bar"></div>
+                </div>
+            </div>
+            <div class="phone-wrapper">
+                <div class="iphone">
+                    <div class="iphone-silent"></div><div class="iphone-vol-up"></div><div class="iphone-vol-down"></div>
+                    <div class="iphone-inner"><img src="../img/yedigen-38.webp" loading="lazy" alt="Ýedigen screen 38"></div>
+                    <div class="iphone-home-bar"></div>
+                </div>
+            </div>
+            <div class="phone-wrapper">
+                <div class="iphone">
+                    <div class="iphone-silent"></div><div class="iphone-vol-up"></div><div class="iphone-vol-down"></div>
+                    <div class="iphone-inner"><img src="../img/yedigen-39.webp" loading="lazy" alt="Ýedigen screen 39"></div>
+                    <div class="iphone-home-bar"></div>
+                </div>
+            </div>
+            <div class="phone-wrapper">
+                <div class="iphone">
+                    <div class="iphone-silent"></div><div class="iphone-vol-up"></div><div class="iphone-vol-down"></div>
+                    <div class="iphone-inner"><img src="../img/yedigen-40.webp" loading="lazy" alt="Ýedigen screen 40"></div>
+                    <div class="iphone-home-bar"></div>
+                </div>
+            </div>
+            <div class="phone-wrapper">
+                <div class="iphone">
+                    <div class="iphone-silent"></div><div class="iphone-vol-up"></div><div class="iphone-vol-down"></div>
+                    <div class="iphone-inner"><img src="../img/yedigen-41.webp" loading="lazy" alt="Ýedigen screen 41"></div>
+                    <div class="iphone-home-bar"></div>
+                </div>
+            </div>
+            <div class="phone-wrapper">
+                <div class="iphone">
+                    <div class="iphone-silent"></div><div class="iphone-vol-up"></div><div class="iphone-vol-down"></div>
+                    <div class="iphone-inner"><img src="../img/yedigen-42.webp" loading="lazy" alt="Ýedigen screen 42"></div>
+                    <div class="iphone-home-bar"></div>
+                </div>
+            </div>
+            <div class="phone-wrapper">
+                <div class="iphone">
+                    <div class="iphone-silent"></div><div class="iphone-vol-up"></div><div class="iphone-vol-down"></div>
+                    <div class="iphone-inner"><img src="../img/yedigen-43.webp" loading="lazy" alt="Ýedigen screen 43"></div>
+                    <div class="iphone-home-bar"></div>
+                </div>
+            </div>
+            <div class="phone-wrapper">
+                <div class="iphone">
+                    <div class="iphone-silent"></div><div class="iphone-vol-up"></div><div class="iphone-vol-down"></div>
+                    <div class="iphone-inner"><img src="../img/yedigen-44.webp" loading="lazy" alt="Ýedigen screen 44"></div>
+                    <div class="iphone-home-bar"></div>
+                </div>
+            </div>
+            <div class="phone-wrapper">
+                <div class="iphone">
+                    <div class="iphone-silent"></div><div class="iphone-vol-up"></div><div class="iphone-vol-down"></div>
+                    <div class="iphone-inner"><img src="../img/yedigen-45.webp" loading="lazy" alt="Ýedigen screen 45"></div>
+                    <div class="iphone-home-bar"></div>
+                </div>
+            </div>
+            <div class="phone-wrapper">
+                <div class="iphone">
+                    <div class="iphone-silent"></div><div class="iphone-vol-up"></div><div class="iphone-vol-down"></div>
+                    <div class="iphone-inner"><img src="../img/yedigen-46.webp" loading="lazy" alt="Ýedigen screen 46"></div>
+                    <div class="iphone-home-bar"></div>
+                </div>
+            </div>
+            <div class="phone-wrapper">
+                <div class="iphone">
+                    <div class="iphone-silent"></div><div class="iphone-vol-up"></div><div class="iphone-vol-down"></div>
+                    <div class="iphone-inner"><img src="../img/yedigen-47.webp" loading="lazy" alt="Ýedigen screen 47"></div>
+                    <div class="iphone-home-bar"></div>
+                </div>
+            </div>
+            <div class="phone-wrapper">
+                <div class="iphone">
+                    <div class="iphone-silent"></div><div class="iphone-vol-up"></div><div class="iphone-vol-down"></div>
+                    <div class="iphone-inner"><img src="../img/yedigen-48.webp" loading="lazy" alt="Ýedigen screen 48"></div>
+                    <div class="iphone-home-bar"></div>
+                </div>
+            </div>
+            <div class="phone-wrapper">
+                <div class="iphone">
+                    <div class="iphone-silent"></div><div class="iphone-vol-up"></div><div class="iphone-vol-down"></div>
+                    <div class="iphone-inner"><img src="../img/yedigen-49.webp" loading="lazy" alt="Ýedigen screen 49"></div>
+                    <div class="iphone-home-bar"></div>
+                </div>
+            </div>
+            <div class="phone-wrapper">
+                <div class="iphone">
+                    <div class="iphone-silent"></div><div class="iphone-vol-up"></div><div class="iphone-vol-down"></div>
+                    <div class="iphone-inner"><img src="../img/yedigen-50.webp" loading="lazy" alt="Ýedigen screen 50"></div>
+                    <div class="iphone-home-bar"></div>
+                </div>
+            </div>
+            <div class="phone-wrapper">
+                <div class="iphone">
+                    <div class="iphone-silent"></div><div class="iphone-vol-up"></div><div class="iphone-vol-down"></div>
+                    <div class="iphone-inner"><img src="../img/yedigen-51.webp" loading="lazy" alt="Ýedigen screen 51"></div>
+                    <div class="iphone-home-bar"></div>
+                </div>
+            </div>
+            <div class="phone-wrapper">
+                <div class="iphone">
+                    <div class="iphone-silent"></div><div class="iphone-vol-up"></div><div class="iphone-vol-down"></div>
+                    <div class="iphone-inner"><img src="../img/yedigen-52.webp" loading="lazy" alt="Ýedigen screen 52"></div>
+                    <div class="iphone-home-bar"></div>
+                </div>
+            </div>
+        </div>
+        <button class="carousel-btn next" aria-label="Next screen">&#8250;</button>
+        </div>
+        <div class="carousel-counter"></div>
+    </div>
+</section>
+
+<!-- BACK -->
+<div class="back-section">
+    <p>Interested in my other projects?</p>
+    <div class="hero-cta">
+        <a href="../index.html#portfolio" class="btn-ghost">
+            <i class="fa fa-arrow-left"></i> Back to Portfolio
+        </a>
+        <a href="../index.html#contact" class="btn-ghost">
+            <i class="fa fa-envelope"></i> Get in Touch
+        </a>
+    </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+    <p>Aziz Bibitov — iOS Developer &nbsp;·&nbsp; <a href="mailto:azizbibitov11@gmail.com">azizbibitov11@gmail.com</a> &nbsp;·&nbsp; <a href="../index.html">Portfolio</a></p>
+</footer>
+
+    <script>
+    (function() {
+        document.querySelectorAll('.carousel-wrapper').forEach(function(wrapper) {
+            var row = wrapper.querySelector('.phones-row');
+            var prevBtn = wrapper.querySelector('.carousel-btn.prev');
+            var nextBtn = wrapper.querySelector('.carousel-btn.next');
+            var counterEl = wrapper.parentElement.querySelector('.carousel-counter');
+            var items = Array.from(row.querySelectorAll('.phone-wrapper'));
+
+            // One phone plus the gap. Buttons move by this step instead of centering an
+            // item index: the first two phones can share the same snap position, which
+            // left an index-based "next" stuck on the second phone.
+            function step() {
+                return items[1].getBoundingClientRect().left - items[0].getBoundingClientRect().left;
+            }
+
+            // Range of phones at least half inside the row, e.g. "1–4 / 94".
+            function updateCounter() {
+                var box = row.getBoundingClientRect();
+                var visible = [];
+                items.forEach(function(item, i) {
+                    var r = item.getBoundingClientRect();
+                    var inside = Math.min(r.right, box.right) - Math.max(r.left, box.left);
+                    if (inside >= r.width / 2) visible.push(i + 1);
+                });
+                if (!visible.length) return;
+                var first = visible[0], last = visible[visible.length - 1];
+                counterEl.innerHTML = '<b>' + (first === last ? first : first + '–' + last) + '</b> / ' + items.length;
+            }
+
+            row.addEventListener('scroll', updateCounter, { passive: true });
+            window.addEventListener('resize', updateCounter);
+            updateCounter();
+            if (prevBtn) prevBtn.addEventListener('click', function() { row.scrollBy({ left: -step(), behavior: 'smooth' }); });
+            if (nextBtn) nextBtn.addEventListener('click', function() { row.scrollBy({ left: step(), behavior: 'smooth' }); });
+        });
+    })();
+    </script>
+</body>
+</html>

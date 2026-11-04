@@ -229,6 +229,14 @@
             position: absolute; bottom: 6px; left: 50%; transform: translateX(-50%);
             width: 36%; height: 4px; background: #444; border-radius: 2px;
         }
+        /* The same iPhone turned sideways, for full-screen player shots (1792×828) */
+        .iphone.landscape { width: 444px; }
+        .iphone.landscape .iphone-inner { aspect-ratio: 1792 / 828; }
+        .iphone.landscape::before,
+        .iphone.landscape .iphone-silent,
+        .iphone.landscape .iphone-vol-up,
+        .iphone.landscape .iphone-vol-down { display: none; }
+        .iphone.landscape .iphone-home-bar { width: 20%; }
 
         /* BACK / FOOTER */
         .back-section { padding: 64px 24px; text-align: center; }
@@ -246,6 +254,7 @@
             .stat { min-width: 50%; border-bottom: 1px solid var(--border-neutral); }
             .iphone { width: 180px; border-radius: 22px; }
             .iphone-inner { margin: 11px; border-radius: 12px; }
+            .iphone.landscape { width: min(362px, 86vw); }
             .phones-row { padding: 24px 20px 36px; gap: 14px; }
             .carousel-btn { display: none; }
             .carousel-wrapper { gap: 0; }
@@ -253,6 +262,7 @@
         @media (max-width: 400px) {
             .iphone { width: 155px; border-radius: 19px; }
             .iphone-inner { margin: 10px; border-radius: 11px; }
+            .iphone.landscape { width: min(310px, 86vw); }
         }
     </style>
 </head>
@@ -381,7 +391,7 @@
     <div class="container">
         <span class="section-tag">App Screens</span>
         <h2 class="section-title">Screenshots</h2>
-        <p class="section-sub">52 screens from the app running on iPhone.</p>
+        <p class="section-sub">56 screens from the app running on iPhone.</p>
 
         <div class="carousel-wrapper">
         <button class="carousel-btn prev" aria-label="Previous screen">&#8249;</button>
@@ -747,6 +757,34 @@
                 <div class="iphone">
                     <div class="iphone-silent"></div><div class="iphone-vol-up"></div><div class="iphone-vol-down"></div>
                     <div class="iphone-inner"><img src="../img/yedigen-52.webp" loading="lazy" alt="Ýedigen screen 52"></div>
+                    <div class="iphone-home-bar"></div>
+                </div>
+            </div>
+            <div class="phone-wrapper">
+                <div class="iphone landscape">
+                    <div class="iphone-silent"></div><div class="iphone-vol-up"></div><div class="iphone-vol-down"></div>
+                    <div class="iphone-inner"><img src="../img/yedigen-53.webp" loading="lazy" alt="Ýedigen screen 53"></div>
+                    <div class="iphone-home-bar"></div>
+                </div>
+            </div>
+            <div class="phone-wrapper">
+                <div class="iphone landscape">
+                    <div class="iphone-silent"></div><div class="iphone-vol-up"></div><div class="iphone-vol-down"></div>
+                    <div class="iphone-inner"><img src="../img/yedigen-54.webp" loading="lazy" alt="Ýedigen screen 54"></div>
+                    <div class="iphone-home-bar"></div>
+                </div>
+            </div>
+            <div class="phone-wrapper">
+                <div class="iphone landscape">
+                    <div class="iphone-silent"></div><div class="iphone-vol-up"></div><div class="iphone-vol-down"></div>
+                    <div class="iphone-inner"><img src="../img/yedigen-55.webp" loading="lazy" alt="Ýedigen screen 55"></div>
+                    <div class="iphone-home-bar"></div>
+                </div>
+            </div>
+            <div class="phone-wrapper">
+                <div class="iphone">
+                    <div class="iphone-silent"></div><div class="iphone-vol-up"></div><div class="iphone-vol-down"></div>
+                    <div class="iphone-inner"><img src="../img/yedigen-56.webp" loading="lazy" alt="Ýedigen screen 56"></div>
                     <div class="iphone-home-bar"></div>
                 </div>
             </div>

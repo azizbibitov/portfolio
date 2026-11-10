@@ -566,6 +566,11 @@ a:focus {
     height: 1px;
     background: linear-gradient(to right, #ccc, transparent);
 }
+.portfolio-sub-note {
+    font-size: 14px;
+    color: #888;
+    margin: -10px 15px 20px;
+}
 
 .content-header::after {
     content: '';

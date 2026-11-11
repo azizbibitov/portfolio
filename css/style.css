@@ -87,6 +87,17 @@ a:focus {
     display: none;
 }
 
+/* main.js adds .is-hidden while the Contact buttons are on screen; whether the footer is shown at all
+   is still decided by the media queries (hidden on phones). */
+.wrapper .sidebar-footer {
+    transition: opacity .4s;
+}
+
+.wrapper .sidebar-footer.is-hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
 .navbar {
     padding: 15px;
     background: #222222 !important;

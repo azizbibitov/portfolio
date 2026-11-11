@@ -55,13 +55,11 @@
     });
     
     
-    // Hide sidebar footer when contact section is visible
+    // Hide sidebar footer when contact section is visible. Toggle a class (opacity) rather than
+    // fadeIn/fadeOut: fadeIn writes an inline display:block that overrode the CSS hiding the footer
+    // on phones, so the unstyled icons showed up in the mobile menu.
     var contactObserver = new IntersectionObserver(function (entries) {
-        if (entries[0].isIntersecting) {
-            $('.sidebar-footer').fadeOut('fast');
-        } else {
-            $('.sidebar-footer').fadeIn('slow');
-        }
+        $('.sidebar-footer').toggleClass('is-hidden', entries[0].isIntersecting);
     }, { threshold: 0.1 });
     var contactButtons = document.querySelector('#contact .social');
     if (contactButtons) {

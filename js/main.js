@@ -102,6 +102,17 @@
         this.style.setProperty('--accent-on-dark', vsDark >= 3 ? 'var(--accent)' : '#ffffff');
     });
 
+    // Dark-theme name shine: each part of the heading (name, Apple, Swift) draws the shared band
+    // shifted by its own position inside the wrap, so one band sweeps across all of them.
+    function placeShine() {
+        $('.h1-shine-wrap').children().each(function () {
+            this.style.setProperty('--shine-off', this.offsetLeft + 'px');
+        });
+    }
+    placeShine();
+    $(window).on('resize', placeShine);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(placeShine);
+
     // Dark / light theme toggle. The initial theme is set by the inline script in <head>.
     var root = document.documentElement;
     var systemDark = window.matchMedia('(prefers-color-scheme: dark)');

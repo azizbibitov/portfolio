@@ -513,6 +513,52 @@ a:focus {
     100% { left: 120%; }
 }
 
+/* Dark theme: the white screen-blend band above also lightens the dark background into a grey bar,
+   so it is replaced by a "shiny text" glint clipped to the name's letters: a light-grey base with a
+   white band sweeping across (the band only shows because the base is dimmer than white). */
+[data-theme="dark"] .header h1 .h1-shine-wrap::after {
+    display: none;
+}
+
+/* One band sweeps across the name AND both icons. The wrap animates --shine-x (band position in px
+   from the wrap's left edge); each child keeps its own base colour and draws the band shifted by its
+   own --shine-off (its offsetLeft in the wrap, set in main.js), so the band lines up across all three. */
+@property --shine-x {
+    syntax: '<length>';
+    inherits: true;
+    initial-value: -160px;
+}
+
+[data-theme="dark"] .header h1 .h1-shine-wrap {
+    animation: shine-x 3.5s ease-in-out infinite;
+}
+
+@keyframes shine-x {
+    0%   { --shine-x: -160px; }
+    100% { --shine-x: 720px; }
+}
+
+[data-theme="dark"] .header h1 .name-text,
+[data-theme="dark"] .header h1 .apple-icon,
+[data-theme="dark"] .header h1 .swift-icon {
+    background-image: linear-gradient(
+        105deg,
+        transparent 25%,
+        rgba(255, 255, 255, 0.95) 50%,
+        transparent 75%
+    );
+    background-size: 160px 100%;
+    background-repeat: no-repeat;
+    background-position: calc(var(--shine-x) - var(--shine-off, 0px)) 0;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+[data-theme="dark"] .header h1 .name-text  { background-color: #b4bac5; }
+[data-theme="dark"] .header h1 .apple-icon { background-color: var(--muted); }
+[data-theme="dark"] .header h1 .swift-icon { background-color: var(--accent); }
+
 .header h2 {
     display: inline-block;
     margin: 0;

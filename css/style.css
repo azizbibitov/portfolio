@@ -1111,7 +1111,7 @@ a:focus {
 
 .portfolio .portfolio-item figure .link-preview i,
 .portfolio .portfolio-item figure .link-details i {
-    color: #222222;
+    color: var(--heading);
     padding-top: 10px;
     font-size: 16px;
 }
@@ -1168,7 +1168,7 @@ a:focus {
     right: 0;
     top: 100%;
     padding: 30px 10px;
-    color: #222222;
+    color: var(--heading);
     font-size: 16px;
     font-weight: 600;
     background: rgba(var(--accent-rgb), .5);

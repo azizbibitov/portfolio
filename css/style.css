@@ -1529,3 +1529,67 @@ a:focus {
     color: var(--heading);
 }
 
+
+
+/**********************************/
+/***** Dark theme: contrast fixes *****/
+/**********************************/
+/* Everything below applies only in the dark theme; the light theme keeps its original colours. */
+
+/* Project cards: icons on the accent square use --on-accent (set per card in main.js:
+   #fff or #222, whichever contrasts more with that card's accent). */
+[data-theme="dark"] .portfolio .portfolio-item figure .link-preview i,
+[data-theme="dark"] .portfolio .portfolio-item figure .link-details i,
+[data-theme="dark"] .portfolio .portfolio-item figure .link-github i {
+    color: var(--on-accent, var(--heading));
+}
+
+/* On hover the square turns #222/#000; --accent-on-dark is the accent if it still reads there, else white. */
+[data-theme="dark"] .portfolio .portfolio-item figure .link-preview:hover i,
+[data-theme="dark"] .portfolio .portfolio-item figure .link-details:hover i,
+[data-theme="dark"] .portfolio .portfolio-item figure .link-github:hover i {
+    color: var(--accent-on-dark, var(--accent));
+}
+
+/* A 50% accent over the dimmed dark card is a mid-tone neither light nor dark text reads on,
+   so the title bar gets a near-solid accent and the per-card on-accent text colour. */
+[data-theme="dark"] .portfolio .portfolio-item figure .portfolio-title {
+    background: rgba(var(--accent-rgb), .88);
+    color: var(--on-accent, var(--heading));
+}
+
+/* Brand buttons: darker official shades so the white glyphs stay readable. */
+@media (min-width: 768px) {
+    [data-theme="dark"] .sidebar .sidebar-footer a.btn-telegram { background: #0088cc; }
+    [data-theme="dark"] .sidebar .sidebar-footer a.btn-telegram:hover { background: #ffffff; color: #0088cc; }
+    [data-theme="dark"] .sidebar .sidebar-footer a.btn-upwork { background: #108a00; }
+    [data-theme="dark"] .sidebar .sidebar-footer a.btn-upwork:hover { background: #ffffff; color: #108a00; }
+    [data-theme="dark"] .sidebar .sidebar-footer a.btn-whatsapp { background: #128c7e; }
+    [data-theme="dark"] .sidebar .sidebar-footer a.btn-whatsapp:hover { background: #ffffff; color: #128c7e; }
+}
+
+[data-theme="dark"] .contact .social a.btn-telegram { background: #0088cc; }
+[data-theme="dark"] .contact .social a.btn-telegram:hover { background: #ffffff; color: #0088cc; }
+[data-theme="dark"] .contact .social a.btn-upwork { background: #108a00; }
+[data-theme="dark"] .contact .social a.btn-upwork:hover { background: #ffffff; color: #108a00; }
+[data-theme="dark"] .contact .social a.btn-whatsapp { background: #128c7e; }
+[data-theme="dark"] .contact .social a.btn-whatsapp:hover { background: #ffffff; color: #128c7e; }
+
+[data-theme="dark"] .large-btn .btn:last-child,
+[data-theme="dark"] .about .btn-upwork {
+    background: #108a00;
+}
+
+[data-theme="dark"] .about .btn-upwork:hover {
+    background: #222222;
+    color: #ffffff;
+}
+
+/* Lightbox (image preview): white loading box and white frame around the image. */
+[data-theme="dark"] .lb-outerContainer {
+    background-color: var(--surface);
+}
+
+[data-theme="dark"] .lightbox .lb-image {
+    border-color: var(--surface);
+}

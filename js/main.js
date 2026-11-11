@@ -81,6 +81,27 @@
         return false;
     });
 
+    // Icon colour on each project card's accent square: white or #222, whichever has the higher
+    // WCAG contrast ratio against that card's --accent-rgb. Independent of the page theme.
+    function luminance(r, g, b) {
+        var c = [r, g, b].map(function (v) {
+            v /= 255;
+            return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4);
+        });
+        return 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2];
+    }
+
+    $('.portfolio-item figure').each(function () {
+        var rgb = getComputedStyle(this).getPropertyValue('--accent-rgb').split(',').map(Number);
+        if (rgb.length !== 3 || rgb.some(isNaN)) return;
+        var L = luminance(rgb[0], rgb[1], rgb[2]);
+        var vsWhite = 1.05 / (L + 0.05);
+        var vsDark = (L + 0.05) / (luminance(34, 34, 34) + 0.05);
+        this.style.setProperty('--on-accent', vsWhite >= vsDark ? '#ffffff' : '#222222');
+        // Hover squares are #222/#000: keep the accent icon only if it still reaches 3:1 there.
+        this.style.setProperty('--accent-on-dark', vsDark >= 3 ? 'var(--accent)' : '#ffffff');
+    });
+
     // Dark / light theme toggle. The initial theme is set by the inline script in <head>.
     var root = document.documentElement;
     var systemDark = window.matchMedia('(prefers-color-scheme: dark)');

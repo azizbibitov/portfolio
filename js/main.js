@@ -80,5 +80,34 @@
         $('html, body').animate({scrollTop: 0}, 1500, 'easeInOutExpo');
         return false;
     });
+
+    // Dark / light theme toggle. The initial theme is set by the inline script in <head>.
+    var root = document.documentElement;
+    var systemDark = window.matchMedia('(prefers-color-scheme: dark)');
+
+    function savedTheme() {
+        try { return localStorage.getItem('theme'); } catch (e) { return null; }
+    }
+
+    function applyTheme(theme) {
+        root.setAttribute('data-theme', theme);
+        var dark = theme === 'dark';
+        var label = dark ? 'Switch to light theme' : 'Switch to dark theme';
+        $('.theme-toggle').attr({'aria-label': label, title: label});
+        $('.theme-toggle i').attr('class', dark ? 'fa fa-sun' : 'fa fa-moon');
+    }
+
+    applyTheme(root.getAttribute('data-theme') || 'light');
+
+    $('.theme-toggle').on('click', function () {
+        var next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+        try { localStorage.setItem('theme', next); } catch (e) {}
+        applyTheme(next);
+    });
+
+    // Follow system changes until the visitor picks a theme with the toggle.
+    systemDark.addEventListener('change', function (e) {
+        if (!savedTheme()) applyTheme(e.matches ? 'dark' : 'light');
+    });
 })(jQuery);
 

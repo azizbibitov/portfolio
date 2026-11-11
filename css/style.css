@@ -4,19 +4,43 @@
 :root {
     --accent: #F05138;
     --accent-rgb: 240, 81, 56;
+
+    color-scheme: light;
+    --page-bg: #E8F4FF;
+    --surface: #ffffff;
+    --text: #666666;
+    --text-strong: #444444;
+    --heading: #222222;
+    --muted: #888888;
+    --subtle: #777777;
+    --rule: #cccccc;
+}
+
+/* Dark theme: set on <html> by the inline script in index.html <head>,
+   from the saved choice or the visitor's system setting. */
+:root[data-theme="dark"] {
+    color-scheme: dark;
+    --page-bg: #0d1017;
+    --surface: #161a22;
+    --text: #a3a9b4;
+    --text-strong: #c9ced6;
+    --heading: #eef0f4;
+    --muted: #8b919c;
+    --subtle: #8b919c;
+    --rule: #3a404b;
 }
 
 /**********************************/
 /********** General CSS ***********/
 /**********************************/
 body {
-    color: #666666;
-    background: #E8F4FF;
+    color: var(--text);
+    background: var(--page-bg);
     font-family: 'Open Sans', sans-serif;
 }
 
 a {
-    color: #222222;
+    color: var(--heading);
     transition: all .3s;
 }
 
@@ -55,7 +79,7 @@ a:focus {
     width: 100%;
     padding: 15px;
     float: left;
-    background: #E8F4FF;
+    background: var(--page-bg);
 }
 
 .wrapper .sidebar-header,
@@ -105,6 +129,48 @@ a:focus {
     color: var(--accent);
 }
 
+/* Round dark/light theme button, fixed top-right. */
+.theme-toggle {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+    width: 42px;
+    height: 42px;
+    padding: 0;
+    border-radius: 50%;
+    border: 1px solid var(--rule);
+    background: var(--surface);
+    color: var(--heading);
+    font-size: 17px;
+    line-height: 1;
+    cursor: pointer;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+    transition: color .3s, border-color .3s;
+}
+
+.theme-toggle:hover {
+    color: var(--accent);
+    border-color: var(--accent);
+}
+
+.theme-toggle:focus {
+    outline: none;
+}
+
+.theme-toggle:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+}
+
+/* On phones the sidebar becomes a top bar with the menu button on the right; sit just left of it. */
+@media (max-width: 767.98px) {
+    .theme-toggle {
+        top: 14px;
+        right: 82px;
+    }
+}
+
 
 .wrapper .sidebar,
 .wrapper .content {
@@ -125,7 +191,7 @@ a:focus {
         content: "";
         width: 100%;
         height: 30px;
-        background: #E8F4FF;
+        background: var(--page-bg);
         z-index: 1;
     }
     
@@ -350,7 +416,7 @@ a:focus {
 }
 
 .back-to-top i {
-    color: #222222;
+    color: var(--heading);
 }
 
 .back-to-top i:hover {
@@ -378,7 +444,7 @@ a:focus {
 /**********************************/
 .header {
     position: relative;
-    background: #ffffff;
+    background: var(--surface);
 }
 
 .header .content-inner {
@@ -395,7 +461,7 @@ a:focus {
 }
 
 .header h1 {
-    color: #222222;
+    color: var(--heading);
     font-size: 50px;
     font-weight: 700;
 }
@@ -407,11 +473,11 @@ a:focus {
 }
 
 .header h1 .name-text {
-    color: #222222;
+    color: var(--heading);
 }
 
 .header h1 .apple-icon {
-    color: #888888;
+    color: var(--muted);
     vertical-align: baseline;
 }
 
@@ -452,7 +518,7 @@ a:focus {
     margin: 0;
     height: 25px;
     font-size: 25px;
-    color: #888888;
+    color: var(--muted);
 }
 
 .header .typed-text {
@@ -462,7 +528,7 @@ a:focus {
 .header .typed-cursor {
     font-size: 25px;
     font-weight: 300;
-    color: #222222;
+    color: var(--heading);
 }
 
 /* Narrow screens: the photo would cover the name, so it moves below the text */
@@ -489,7 +555,7 @@ a:focus {
 
 .large-btn .content-inner {
     font-size: 0;
-    border-bottom: 30px solid #E8F4FF;
+    border-bottom: 30px solid var(--page-bg);
 }
 
 .large-btn .btn {
@@ -542,7 +608,7 @@ a:focus {
 }
 
 .content-header h2 {
-    color: #222222;
+    color: var(--heading);
     font-size: 35px;
     font-weight: 700;
     letter-spacing: 3px;
@@ -554,7 +620,7 @@ a:focus {
     font-weight: 700;
     letter-spacing: 2px;
     text-transform: uppercase;
-    color: #777;
+    color: var(--subtle);
     margin: 44px 15px 20px;
     display: flex;
     align-items: center;
@@ -564,11 +630,11 @@ a:focus {
     content: '';
     flex: 1;
     height: 1px;
-    background: linear-gradient(to right, #ccc, transparent);
+    background: linear-gradient(to right, var(--rule), transparent);
 }
 .portfolio-sub-note {
     font-size: 14px;
-    color: #888;
+    color: var(--muted);
     margin: -10px 15px 20px;
 }
 .portfolio .portfolio-item figure .portfolio-status {
@@ -605,8 +671,8 @@ a:focus {
 .about {
     position: relative;
     padding: 60px 30px;
-    background: #ffffff;
-    border-bottom: 30px solid #E8F4FF;
+    background: var(--surface);
+    border-bottom: 30px solid var(--page-bg);
 }
 
 
@@ -659,12 +725,12 @@ a:focus {
 .bio-list li {
     font-size: 14px;
     line-height: 1.6;
-    color: #444;
+    color: var(--text-strong);
 }
 
 .bio-list a {
     font-weight: 600;
-    color: #222;
+    color: var(--heading);
     text-decoration: none;
 }
 
@@ -691,7 +757,7 @@ a:focus {
     height: 5px;
     border: 1px solid var(--accent);
     border-radius: 0;
-    background: #ffffff;
+    background: var(--surface);
 }
 
 .about .progress .progress-bar {
@@ -708,8 +774,8 @@ a:focus {
 .education {
     position: relative;
     padding: 60px 30px;
-    background: #ffffff;
-    border-bottom: 30px solid #E8F4FF;
+    background: var(--surface);
+    border-bottom: 30px solid var(--page-bg);
 }
 
 .education .edu-col {
@@ -798,8 +864,8 @@ a:focus {
 .experience {
     position: relative;
     padding: 60px 30px;
-    background: #ffffff;
-    border-bottom: 30px solid #E8F4FF;
+    background: var(--surface);
+    border-bottom: 30px solid var(--page-bg);
 }
 
 .experience .exp-col {
@@ -923,8 +989,8 @@ a:focus {
 .service {
     position: relative;
     padding: 60px 30px 30px 30px;
-    background: #ffffff;
-    border-bottom: 30px solid #E8F4FF;
+    background: var(--surface);
+    border-bottom: 30px solid var(--page-bg);
 }
 
 .service .srv-col {
@@ -970,8 +1036,8 @@ a:focus {
 .portfolio {
     position: relative;
     padding: 60px 30px 30px 30px;
-    background: #ffffff;
-    border-bottom: 30px solid #E8F4FF;
+    background: var(--surface);
+    border-bottom: 30px solid var(--page-bg);
 }
 
 .portfolio #portfolio-flters {
@@ -987,19 +1053,19 @@ a:focus {
     display: inline-block;
     height: 35px;
     padding: 10px;
-    color: #666666;
+    color: var(--text);
     font-size: 13px;
     line-height: 15px;
     text-transform: uppercase;
     border: 1px solid var(--accent);
-    background: #ffffff;
+    background: var(--surface);
     transition: all 0.3s ease-in-out;
 }
 
 .portfolio #portfolio-flters li:hover,
 .portfolio #portfolio-flters li.filter-active {
     background: var(--accent);
-    color: #222222;
+    color: var(--heading);
 }
 
 .portfolio .portfolio-item {
@@ -1009,7 +1075,7 @@ a:focus {
 }
 
 .portfolio .portfolio-item figure {
-    background: #ffffff;
+    background: var(--surface);
     overflow: hidden;
     height: 220px;
     position: relative;
@@ -1181,14 +1247,20 @@ a:focus {
 /**********************************/
 .review {
     position: relative;
-    background: #ffffff;
-    border-bottom: 30px solid #E8F4FF;
+    background: var(--surface);
+    border-bottom: 30px solid var(--page-bg);
 }
 
 .review .content-inner {
     position: relative;
     padding: 60px 30px;
     background: url(../img/quote.png) right bottom no-repeat;
+}
+
+/* quote.png is light grey for a white card; multiply turns it into a mark just darker than the dark card. */
+[data-theme="dark"] .review .content-inner {
+    background-color: var(--surface);
+    background-blend-mode: multiply;
 }
 
 .review .review-text p {
@@ -1319,7 +1391,7 @@ a:focus {
 .contact {
     position: relative;
     padding: 60px 30px 30px 30px;
-    background: #ffffff;
+    background: var(--surface);
 }
 
 .contact .contact-info {
@@ -1341,7 +1413,7 @@ a:focus {
 }
 
 .contact .contact-info p a {
-    color: #666666;
+    color: var(--text);
 }
 
 .contact .contact-info p a:hover {
@@ -1358,7 +1430,7 @@ a:focus {
     height: 40px;
     padding: 5px 0;
     font-size: 22px;
-    color: #222222;
+    color: var(--heading);
     background: var(--accent);
     border-radius: 0;
     margin-top: 15px;
@@ -1386,6 +1458,7 @@ a:focus {
 .contact .social a.btn-upwork svg { position: relative; top: -3px; }
 
 .contact .social a.btn-github { background: #181717; color: #ffffff; }
+[data-theme="dark"] .contact .social a.btn-github { background: #2d333b; }
 .contact .social a.btn-github:hover { background: #ffffff; color: #181717; }
 .contact .social a.btn-github i { position: relative; top: -1.5px; }
 
@@ -1443,7 +1516,7 @@ a:focus {
 }
 
 .footer p {
-    color: #222222;
+    color: var(--heading);
     margin: 0;
 }
 
@@ -1453,6 +1526,6 @@ a:focus {
 }
 
 .footer a:hover {
-    color: #222222;
+    color: var(--heading);
 }
 
